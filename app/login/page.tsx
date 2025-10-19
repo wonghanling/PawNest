@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true)
@@ -41,8 +42,9 @@ export default function Login() {
         if (error) throw error
         setMessage('注册成功！请检查您的邮箱以验证账户。')
       }
-    } catch (error: any) {
-      setMessage(error.message || '操作失败，请重试')
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : '操作失败，请重试'
+      setMessage(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -54,15 +56,15 @@ export default function Login() {
       <header className="bg-white dark:bg-slate-900 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <a href="/" className="text-xl font-bold text-slate-900 dark:text-white">
+            <Link href="/" className="text-xl font-bold text-slate-900 dark:text-white">
               PawNest
-            </a>
-            <a
+            </Link>
+            <Link
               href="/"
               className="text-blue-600 hover:text-blue-700 font-medium"
             >
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </header>

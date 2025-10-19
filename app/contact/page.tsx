@@ -63,8 +63,9 @@ export default function ContactPage() {
 
       setSubmitMessage('Thank you for your message! We\'ll get back to you soon.')
       setFormData(prev => ({ ...prev, message: '' })) // 清空消息字段
-    } catch (error: any) {
-      setSubmitMessage(error.message || 'Failed to submit. Please try again.')
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit. Please try again.'
+      setSubmitMessage(errorMessage)
     } finally {
       setIsSubmitting(false)
     }
