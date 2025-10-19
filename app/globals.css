@@ -24,3 +24,53 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Timeline arrow styles */
+.clip-path-arrow {
+  position: relative;
+}
+
+.clip-path-arrow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -12px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 0 20px 12px;
+  border-color: transparent transparent transparent currentColor;
+  z-index: 1;
+}
+
+/* Responsive arrow size for larger screens */
+@media (min-width: 640px) {
+  .clip-path-arrow::after {
+    right: -15px;
+    border-width: 24px 0 24px 15px;
+  }
+}
+
+.clip-path-arrow.from-orange-500::after {
+  border-left-color: rgb(249 115 22);
+}
+
+.clip-path-arrow.from-red-500::after {
+  border-left-color: rgb(239 68 68);
+}
+
+.clip-path-arrow.from-red-700::after {
+  border-left-color: rgb(185 28 28);
+}
+
+.clip-path-arrow.from-blue-600::after {
+  border-left-color: rgb(37 99 235);
+}
+
+.clip-path-arrow.from-green-600::after {
+  border-left-color: rgb(22 163 74);
+}
+
+.clip-path-arrow.from-slate-700::after {
+  border-left-color: rgb(51 65 85);
+}
