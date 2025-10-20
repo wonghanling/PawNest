@@ -54,8 +54,8 @@ export default function ContactPage() {
             user_id: user.id,
             name: formData.name,
             email: formData.email,
-            message: formData.message,
-            created_at: new Date().toISOString()
+            message: formData.message
+            // created_at 将由 Supabase 自动设置为当前服务器时间
           }
         ])
 
