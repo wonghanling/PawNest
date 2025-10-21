@@ -9,7 +9,7 @@ export default function CategoryPage() {
 
   // 生成产品数据（每页8个产品）
   const productsPerPage = 8
-  const totalProducts = 80 // 10页 x 8个产品
+  const totalProducts = 152 // 19页 x 8个产品（足够容纳88个图片）
 
   const products = [
     { name: 'Cat Bed Cushion', price: 75 },
@@ -118,19 +118,56 @@ export default function CategoryPage() {
         <div className="flex-1">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">Shop All</h1>
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-            {currentProducts.map((product, index) => (
-              <div key={product.id} className="group relative">
-                <div className="aspect-square w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-                  {index === 0 ? (
-                    <img
-                      src="/6.jpg"
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <p className="text-slate-500 dark:text-slate-400">Product {product.displayNumber}</p>
-                  )}
-                </div>
+            {currentProducts.map((product, index) => {
+              // 计算全局索引（考虑当前页码）
+              const globalIndex = (currentPage - 1) * productsPerPage + index
+
+              // 图片映射表
+              const imageMap: { [key: number]: string } = {
+                0: '/6.jpg',
+                1: '/16.jpg',
+                2: '/17.jpg',
+                3: '/18.jpg',
+                4: '/19.jpg',
+                5: '/宠物房子1.jpg',
+                6: '/宠物房子2.jpg',
+                7: '/20.jpg',
+              }
+
+              // 20-45的图片 (位置8-33)
+              for (let i = 20; i <= 45; i++) {
+                imageMap[i - 12] = `/${i}.jpg`
+              }
+
+              // 46-91的图片 (从位置34开始，即第35个商品)
+              for (let i = 46; i <= 91; i++) {
+                imageMap[i - 12] = `/${i}.jpg`
+              }
+
+              // 特殊位置：第10页下面一排放置88-91的图片
+              imageMap[76] = '/88.jpg'  // 第10页第5个位置 (globalIndex 76)
+              imageMap[77] = '/89.jpg'  // 第10页第6个位置 (globalIndex 77)
+              imageMap[78] = '/90.jpg'  // 第10页第7个位置 (globalIndex 78)
+              imageMap[79] = '/91.jpg'  // 第10页第8个位置 (globalIndex 79)
+
+              const hasImage = imageMap[globalIndex]
+              const useWhiteBg = globalIndex >= 1 && globalIndex <= 79 // 更新白色背景范围
+
+              return (
+                <div key={product.id} className="group relative">
+                  <div className={`aspect-square w-full overflow-hidden rounded-lg flex items-center justify-center ${
+                    useWhiteBg ? 'bg-white' : 'bg-slate-200 dark:bg-slate-800'
+                  }`}>
+                    {hasImage ? (
+                      <img
+                        src={imageMap[globalIndex]}
+                        alt={product.name}
+                        className={`w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-transform duration-300`}
+                      />
+                    ) : (
+                      <p className="text-slate-500 dark:text-slate-400">Product {product.displayNumber}</p>
+                    )}
+                  </div>
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-xs md:text-sm font-medium">
@@ -149,14 +186,15 @@ export default function CategoryPage() {
                   <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path></svg>
                 </button>
               </div>
-            ))}
+            )
+            })}
           </div>
 
           {/* 翻页导航 */}
           <div className="mt-12 md:mt-16 space-y-4 md:space-y-6">
             {/* 页码指示器 */}
             <div className="flex items-center justify-center gap-2">
-              {[...Array(10)].map((_, index) => {
+              {[...Array(19)].map((_, index) => {
                 const pageNum = index + 1
                 return (
                   <button
@@ -193,13 +231,13 @@ export default function CategoryPage() {
 
               <div className="px-3 md:px-4 py-1.5 md:py-2 bg-slate-100 dark:bg-slate-800 rounded-full">
                 <span className="text-xs md:text-sm font-semibold">
-                  <span className="hidden sm:inline">Page </span><span className="text-primary">{currentPage}</span> <span className="hidden sm:inline">of 10</span><span className="sm:hidden">/ 10</span>
+                  <span className="hidden sm:inline">Page </span><span className="text-primary">{currentPage}</span> <span className="hidden sm:inline">of 19</span><span className="sm:hidden">/ 19</span>
                 </span>
               </div>
 
               <button
-                onClick={() => setCurrentPage(prev => Math.min(10, prev + 1))}
-                disabled={currentPage === 10}
+                onClick={() => setCurrentPage(prev => Math.min(19, prev + 1))}
+                disabled={currentPage === 19}
                 className="group flex items-center gap-1 md:gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full border-2 border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-300 dark:disabled:hover:border-slate-600"
               >
                 <span className="text-sm md:font-medium group-hover:text-primary transition-colors hidden sm:inline">Next</span>
@@ -218,7 +256,7 @@ export default function CategoryPage() {
             <div className="flex items-center justify-center gap-2 md:gap-3">
               <span className="text-xs md:text-sm text-slate-600 dark:text-slate-400">Quick jump:</span>
               <div className="flex gap-2">
-                {[1, 5, 10].map(page => (
+                {[1, 5, 10, 15, 19].map(page => (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
