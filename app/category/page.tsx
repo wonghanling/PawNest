@@ -156,8 +156,8 @@ export default function CategoryPage() {
 
               return (
                 <div key={product.id} className="group relative">
-                  <div className={`aspect-square w-full overflow-hidden rounded-lg flex items-center justify-center ${
-                    useWhiteBg ? 'bg-white' : 'bg-slate-200 dark:bg-slate-800'
+                  <div className={`aspect-square w-full overflow-hidden rounded-lg flex items-center justify-center relative ${
+                    useWhiteBg ? 'bg-white' : 'bg-slate-50 dark:bg-slate-800'
                   }`}>
                     {hasImage ? (
                       <Image
@@ -165,14 +165,24 @@ export default function CategoryPage() {
                         alt={product.name}
                         width={400}
                         height={400}
-                        className={`w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-transform duration-300`}
-                        loading="lazy"
+                        className={`w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-all duration-300 ease-out animate-fadeIn`}
+                        loading={globalIndex < 8 ? 'eager' : 'lazy'}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Txz7/ACMZUqvSLSPJHHhkVpnHluxs5l/5+r/zZHfPafbhFNZ5EHCQcmnSAlQYl3JmP7m/2+nKQ9k3sxb"
                         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                        priority={globalIndex < 8}
                       />
                     ) : (
-                      <p className="text-slate-500 dark:text-slate-400">Product {product.displayNumber}</p>
+                      <div className="flex items-center justify-center text-slate-400 dark:text-slate-500">
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-2 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center">
+                            <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          <p className="text-xs">Product {product.displayNumber}</p>
+                        </div>
+                      </div>
                     )}
                   </div>
                 <div className="mt-4 flex justify-between">
