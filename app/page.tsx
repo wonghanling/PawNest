@@ -8,7 +8,7 @@ export default function Home() {
         {/* 背景图片 */}
         <div className="absolute inset-0">
           <img
-            src="/optimized/1.webp"
+            src="/1.jpg"
             alt="Happy pets"
             className="w-full h-full object-cover object-center"
           />
