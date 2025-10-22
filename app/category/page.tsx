@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useCart } from '@/context/CartContext'
+import Image from 'next/image'
 
 export default function CategoryPage() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -122,33 +123,33 @@ export default function CategoryPage() {
               // 计算全局索引（考虑当前页码）
               const globalIndex = (currentPage - 1) * productsPerPage + index
 
-              // 图片映射表
+              // 图片映射表 (使用优化后的WebP格式)
               const imageMap: { [key: number]: string } = {
-                0: '/6.jpg',
-                1: '/16.jpg',
-                2: '/17.jpg',
-                3: '/18.jpg',
-                4: '/19.jpg',
-                5: '/宠物房子1.jpg',
-                6: '/宠物房子2.jpg',
-                7: '/20.jpg',
+                0: '/optimized/6.webp',
+                1: '/optimized/16.webp',
+                2: '/optimized/17.webp',
+                3: '/optimized/18.webp',
+                4: '/optimized/19.webp',
+                5: '/optimized/宠物房子1.webp',
+                6: '/optimized/宠物房子2.webp',
+                7: '/optimized/20.webp',
               }
 
               // 20-45的图片 (位置8-33)
               for (let i = 20; i <= 45; i++) {
-                imageMap[i - 12] = `/${i}.jpg`
+                imageMap[i - 12] = `/optimized/${i}.webp`
               }
 
               // 46-91的图片 (从位置34开始，即第35个商品)
               for (let i = 46; i <= 91; i++) {
-                imageMap[i - 12] = `/${i}.jpg`
+                imageMap[i - 12] = `/optimized/${i}.webp`
               }
 
               // 特殊位置：第10页下面一排放置88-91的图片
-              imageMap[76] = '/88.jpg'  // 第10页第5个位置 (globalIndex 76)
-              imageMap[77] = '/89.jpg'  // 第10页第6个位置 (globalIndex 77)
-              imageMap[78] = '/90.jpg'  // 第10页第7个位置 (globalIndex 78)
-              imageMap[79] = '/91.jpg'  // 第10页第8个位置 (globalIndex 79)
+              imageMap[76] = '/optimized/88.webp'  // 第10页第5个位置 (globalIndex 76)
+              imageMap[77] = '/optimized/89.webp'  // 第10页第6个位置 (globalIndex 77)
+              imageMap[78] = '/optimized/90.webp'  // 第10页第7个位置 (globalIndex 78)
+              imageMap[79] = '/optimized/91.webp'  // 第10页第8个位置 (globalIndex 79)
 
               const hasImage = imageMap[globalIndex]
               const useWhiteBg = globalIndex >= 1 && globalIndex <= 79 // 更新白色背景范围
@@ -159,10 +160,16 @@ export default function CategoryPage() {
                     useWhiteBg ? 'bg-white' : 'bg-slate-200 dark:bg-slate-800'
                   }`}>
                     {hasImage ? (
-                      <img
+                      <Image
                         src={imageMap[globalIndex]}
                         alt={product.name}
+                        width={400}
+                        height={400}
                         className={`w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-transform duration-300`}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Txz7/ACMZUqvSLSPJHHhkVpnHluxs5l/5+r/zZHfPafbhFNZ5EHCQcmnSAlQYl3JmP7m/2+nKQ9k3sxb"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                       />
                     ) : (
                       <p className="text-slate-500 dark:text-slate-400">Product {product.displayNumber}</p>
