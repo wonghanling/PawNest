@@ -41,82 +41,7 @@ export default function CategoryPage() {
 
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-10 py-6 md:py-8">
-      <div className="flex flex-col lg:flex-row gap-8 md:gap-12">
-        {/* 左侧过滤器 */}
-        <aside className="w-full lg:w-1/4 xl:w-1/5 space-y-6 md:space-y-8">
-          <div>
-            <h2 className="text-xl font-bold mb-4">Filter</h2>
-            <div className="space-y-6">
-              {/* 价格滑块 */}
-              <div>
-                <h3 className="font-semibold mb-3">Price</h3>
-                <div className="relative pt-1">
-                  <div className="flex mb-2 items-center justify-between text-sm text-muted-light dark:text-muted-dark">
-                    <div>$0</div>
-                    <div>$1000</div>
-                  </div>
-                  <div className="h-2 rounded-full bg-border-light dark:bg-border-dark">
-                    <div className="h-2 rounded-full bg-primary" style={{width: '75%', marginLeft: '10%'}}></div>
-                    <div className="absolute -ml-2 -mt-3.5 h-4 w-4 rounded-full bg-primary border-2 border-background-light dark:border-background-dark" style={{left: '10%'}}></div>
-                    <div className="absolute -ml-2 -mt-3.5 h-4 w-4 rounded-full bg-primary border-2 border-background-light dark:border-background-dark" style={{left: '85%'}}></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 产品类型 */}
-              <div>
-                <h3 className="font-semibold mb-3">Product Type</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input className="h-4 w-4 rounded border-border-light dark:border-border-dark text-blue-600 focus:ring-blue-500/50 bg-background-light dark:bg-background-dark" type="checkbox"/>
-                    <div className="text-sm">
-                      <div className="font-medium">Comfort Living</div>
-                      <div className="text-xs text-muted-light dark:text-muted-dark">舒适生活</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input className="h-4 w-4 rounded border-border-light dark:border-border-dark text-blue-600 focus:ring-blue-500/50 bg-background-light dark:bg-background-dark" type="checkbox"/>
-                    <div className="text-sm">
-                      <div className="font-medium">Travel & Safety</div>
-                      <div className="text-xs text-muted-light dark:text-muted-dark">出行与安全</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input className="h-4 w-4 rounded border-border-light dark:border-border-dark text-blue-600 focus:ring-blue-500/50 bg-background-light dark:bg-background-dark" type="checkbox"/>
-                    <div className="text-sm">
-                      <div className="font-medium">Care & Hygiene</div>
-                      <div className="text-xs text-muted-light dark:text-muted-dark">清洁与护理</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input className="h-4 w-4 rounded border-border-light dark:border-border-dark text-blue-600 focus:ring-blue-500/50 bg-background-light dark:bg-background-dark" type="checkbox"/>
-                    <div className="text-sm">
-                      <div className="font-medium">Toys & Play</div>
-                      <div className="text-xs text-muted-light dark:text-muted-dark">玩具与互动</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input className="h-4 w-4 rounded border-border-light dark:border-border-dark text-blue-600 focus:ring-blue-500/50 bg-background-light dark:bg-background-dark" type="checkbox"/>
-                    <div className="text-sm">
-                      <div className="font-medium">Smart & Home</div>
-                      <div className="text-xs text-muted-light dark:text-muted-dark">智能与家居</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input className="h-4 w-4 rounded border-border-light dark:border-border-dark text-blue-600 focus:ring-blue-500/50 bg-background-light dark:bg-background-dark" type="checkbox"/>
-                    <div className="text-sm">
-                      <div className="font-medium">Style & Wear</div>
-                      <div className="text-xs text-muted-light dark:text-muted-dark">时尚穿搭</div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        {/* 右侧产品列表 */}
-        <div className="flex-1">
+      <div>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">Shop All</h1>
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
             {currentProducts.map((product, index) => {
@@ -132,7 +57,7 @@ export default function CategoryPage() {
                 4: '/optimized/19.webp',
                 5: '/optimized/宠物房子1.webp',
                 6: '/optimized/宠物房子2.webp',
-                7: '/optimized/20.webp',
+                7: '/optimized/9.webp',
               }
 
               // 20-45的图片 (位置8-33)
@@ -151,8 +76,16 @@ export default function CategoryPage() {
               imageMap[78] = '/optimized/90.webp'  // 第10页第7个位置 (globalIndex 78)
               imageMap[79] = '/optimized/91.webp'  // 第10页第8个位置 (globalIndex 79)
 
+              // 第11页新图片：92-97 (从位置80开始)
+              imageMap[80] = '/optimized/92.webp'  // 第11页第1个位置 (globalIndex 80)
+              imageMap[81] = '/optimized/93.webp'  // 第11页第2个位置 (globalIndex 81)
+              imageMap[82] = '/optimized/94.webp'  // 第11页第3个位置 (globalIndex 82)
+              imageMap[83] = '/optimized/95.webp'  // 第11页第4个位置 (globalIndex 83)
+              imageMap[84] = '/optimized/96.webp'  // 第11页第5个位置 (globalIndex 84)
+              imageMap[85] = '/optimized/97.webp'  // 第11页第6个位置 (globalIndex 85)
+
               const hasImage = imageMap[globalIndex]
-              const useWhiteBg = globalIndex >= 1 && globalIndex <= 79 // 更新白色背景范围
+              const useWhiteBg = globalIndex >= 1 && globalIndex <= 85 // 更新白色背景范围到第11页第6个位置
 
               return (
                 <div key={product.id} className="group relative">
@@ -278,7 +211,6 @@ export default function CategoryPage() {
               </div>
             </div>
           </div>
-        </div>
       </div>
     </main>
   )
