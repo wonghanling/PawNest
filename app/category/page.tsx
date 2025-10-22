@@ -156,53 +156,22 @@ export default function CategoryPage() {
 
               return (
                 <div key={product.id} className="group relative">
-                  <div className={`aspect-square w-full overflow-hidden rounded-lg flex items-center justify-center relative ${
+                  <div className={`aspect-square w-full overflow-hidden rounded-lg flex items-center justify-center ${
                     useWhiteBg ? 'bg-white' : 'bg-gray-100'
                   }`}>
                     {hasImage ? (
-                      <>
-                        {/* 立即显示的骨架占位符 */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center">
-                          <div className="w-16 h-16 bg-gray-200 rounded-lg animate-pulse flex items-center justify-center">
-                            <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                        </div>
-
-                        <Image
-                          src={imageMap[globalIndex]}
-                          alt={product.name}
-                          width={400}
-                          height={400}
-                          className={`relative z-10 w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-all duration-300 ease-out`}
-                          loading={globalIndex < 8 ? 'eager' : 'lazy'}
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Txz7/ACMZUqvSLSPJHHhkVpnHluxs5l/5+r/zZHfPafbhFNZ5EHCQcmnSAlQYl3JmP7m/2+nKQ9k3sxb"
-                          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                          priority={globalIndex < 8}
-                          onLoad={(e) => {
-                            // 图片加载完成后隐藏骨架屏
-                            const target = e.target as HTMLImageElement;
-                            const skeleton = target.parentElement?.querySelector('.absolute') as HTMLElement;
-                            if (skeleton) {
-                              skeleton.style.opacity = '0';
-                              setTimeout(() => skeleton.remove(), 300);
-                            }
-                          }}
-                        />
-                      </>
+                      <Image
+                        src={imageMap[globalIndex]}
+                        alt={product.name}
+                        width={400}
+                        height={400}
+                        className={`w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-transform duration-200`}
+                        loading={globalIndex < 8 ? 'eager' : 'lazy'}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Txz7/ACMZUqvSLSPJHHhkVpnHluxs5l/5+r/zZHfPafbhFNZ5EHCQcmnSAlQYl3JmP7m/2+nKQ9k3sxb"
+                      />
                     ) : (
-                      <div className="flex items-center justify-center text-slate-400 dark:text-slate-500">
-                        <div className="text-center">
-                          <div className="w-16 h-16 mx-auto mb-2 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center">
-                            <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <p className="text-xs">Product {product.displayNumber}</p>
-                        </div>
-                      </div>
+                      <div className="text-slate-400 text-sm">Product {product.displayNumber}</div>
                     )}
                   </div>
                 <div className="mt-4 flex justify-between">
