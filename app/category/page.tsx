@@ -51,13 +51,13 @@ export default function CategoryPage() {
               // 图片映射表 (使用优化后的WebP格式)
               const imageMap: { [key: number]: string } = {}
 
-              // 1-90 按顺序映射到商品位置 0-89
-              for (let i = 1; i <= 90; i++) {
+              // 1-120 按顺序映射到商品位置 0-119
+              for (let i = 1; i <= 120; i++) {
                 imageMap[i - 1] = `/optimized/${i}.webp`
               }
 
               const hasImage = imageMap[globalIndex]
-              const useWhiteBg = globalIndex >= 0 && globalIndex <= 89 // 商品位置 1-90 使用白色背景
+              const useWhiteBg = globalIndex >= 0 && globalIndex <= 119 // 商品位置 1-120 使用白色背景
 
               return (
                 <div key={product.id} className="group relative">
