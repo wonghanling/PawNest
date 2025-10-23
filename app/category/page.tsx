@@ -49,43 +49,15 @@ export default function CategoryPage() {
               const globalIndex = (currentPage - 1) * productsPerPage + index
 
               // 图片映射表 (使用优化后的WebP格式)
-              const imageMap: { [key: number]: string } = {
-                0: '/optimized/6.webp',
-                1: '/optimized/16.webp',
-                2: '/optimized/17.webp',
-                3: '/optimized/18.webp',
-                4: '/optimized/19.webp',
-                5: '/optimized/宠物房子1.webp',
-                6: '/optimized/宠物房子2.webp',
-                7: '/optimized/9.webp',
+              const imageMap: { [key: number]: string } = {}
+
+              // 1-90 按顺序映射到商品位置 0-89
+              for (let i = 1; i <= 90; i++) {
+                imageMap[i - 1] = `/optimized/${i}.webp`
               }
-
-              // 20-45的图片 (位置8-33)
-              for (let i = 20; i <= 45; i++) {
-                imageMap[i - 12] = `/optimized/${i}.webp`
-              }
-
-              // 46-91的图片 (从位置34开始，即第35个商品)
-              for (let i = 46; i <= 91; i++) {
-                imageMap[i - 12] = `/optimized/${i}.webp`
-              }
-
-              // 特殊位置：第10页下面一排放置88-91的图片
-              imageMap[76] = '/optimized/88.webp'  // 第10页第5个位置 (globalIndex 76)
-              imageMap[77] = '/optimized/89.webp'  // 第10页第6个位置 (globalIndex 77)
-              imageMap[78] = '/optimized/90.webp'  // 第10页第7个位置 (globalIndex 78)
-              imageMap[79] = '/optimized/91.webp'  // 第10页第8个位置 (globalIndex 79)
-
-              // 第11页新图片：92-97 (从位置80开始)
-              imageMap[80] = '/optimized/92.webp'  // 第11页第1个位置 (globalIndex 80)
-              imageMap[81] = '/optimized/93.webp'  // 第11页第2个位置 (globalIndex 81)
-              imageMap[82] = '/optimized/94.webp'  // 第11页第3个位置 (globalIndex 82)
-              imageMap[83] = '/optimized/95.webp'  // 第11页第4个位置 (globalIndex 83)
-              imageMap[84] = '/optimized/96.webp'  // 第11页第5个位置 (globalIndex 84)
-              imageMap[85] = '/optimized/97.webp'  // 第11页第6个位置 (globalIndex 85)
 
               const hasImage = imageMap[globalIndex]
-              const useWhiteBg = globalIndex >= 1 && globalIndex <= 85 // 更新白色背景范围到第11页第6个位置
+              const useWhiteBg = globalIndex >= 0 && globalIndex <= 89 // 商品位置 1-90 使用白色背景
 
               return (
                 <div key={product.id} className="group relative">

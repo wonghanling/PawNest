@@ -29,13 +29,13 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4 md:gap-8 px-4 max-w-4xl mx-auto">
               <div className="group cursor-pointer">
                 <div className="w-full bg-slate-200 dark:bg-slate-800 aspect-square rounded-xl overflow-hidden">
-                  <img src="/optimized/3.webp" alt="Dog" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/02.webp" alt="Dog" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <p className="text-base md:text-lg font-semibold mt-4 text-center text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Dog</p>
               </div>
               <div className="group cursor-pointer">
                 <div className="w-full bg-slate-200 dark:bg-slate-800 aspect-square rounded-xl overflow-hidden">
-                  <img src="/optimized/2.webp" alt="Cat" className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/03.webp" alt="Cat" className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <p className="text-base md:text-lg font-semibold mt-4 text-center text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Cat</p>
               </div>
@@ -49,7 +49,7 @@ export default function Home() {
               {/* Comfort Living */}
               <a href="/category" className="group cursor-pointer">
                 <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                  <img src="/optimized/宠物房子1.webp" alt="Comfort Living" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/04.webp" alt="Comfort Living" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Comfort Living</p>
@@ -60,7 +60,7 @@ export default function Home() {
               {/* Travel & Safety */}
               <a href="/category" className="group cursor-pointer">
                 <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                  <img src="/optimized/推车2.webp" alt="Travel & Safety" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/05.webp" alt="Travel & Safety" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Travel & Safety</p>
@@ -71,7 +71,7 @@ export default function Home() {
               {/* Care & Hygiene */}
               <a href="/category" className="group cursor-pointer">
                 <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                  <img src="/optimized/清洁3.webp" alt="Care & Hygiene" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/06.webp" alt="Care & Hygiene" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Care & Hygiene</p>
@@ -82,7 +82,7 @@ export default function Home() {
               {/* Toys & Play */}
               <a href="/category" className="group cursor-pointer">
                 <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                  <img src="/optimized/玩具2.webp" alt="Toys & Play" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/07.webp" alt="Toys & Play" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Toys & Play</p>
@@ -93,7 +93,7 @@ export default function Home() {
               {/* Smart & Home */}
               <a href="/category" className="group cursor-pointer">
                 <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                  <img src="/optimized/智能家居1.webp" alt="Smart & Home" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/08.webp" alt="Smart & Home" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Smart & Home</p>
@@ -104,7 +104,7 @@ export default function Home() {
               {/* Style & Wear */}
               <a href="/category" className="group cursor-pointer">
                 <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                  <img src="/optimized/衣服3.webp" alt="Style & Wear" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  <img src="/optimized/09.webp" alt="Style & Wear" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Style & Wear</p>
@@ -181,7 +181,7 @@ export default function Home() {
               <div className="flex flex-col gap-4 bg-slate-100 dark:bg-slate-900/50 p-6 rounded-xl">
                 <div className="w-24 h-24 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto flex items-center justify-center overflow-hidden">
                   <img
-                    src="/optimized/人物1.webp"
+                    src="/optimized/010.webp"
                     alt="Sarah M."
                     className="w-full h-full object-cover"
                   />
@@ -194,7 +194,7 @@ export default function Home() {
               <div className="flex flex-col gap-4 bg-slate-100 dark:bg-slate-900/50 p-6 rounded-xl">
                 <div className="w-24 h-24 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto flex items-center justify-center overflow-hidden">
                   <img
-                    src="/optimized/人物2.webp"
+                    src="/optimized/011.webp"
                     alt="David L."
                     className="w-full h-full object-cover"
                   />
@@ -207,7 +207,7 @@ export default function Home() {
               <div className="flex flex-col gap-4 bg-slate-100 dark:bg-slate-900/50 p-6 rounded-xl">
                 <div className="w-24 h-24 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto flex items-center justify-center overflow-hidden">
                   <img
-                    src="/optimized/人物3.webp"
+                    src="/optimized/012.webp"
                     alt="Emily R."
                     className="w-full h-full object-cover"
                   />
