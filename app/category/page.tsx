@@ -68,12 +68,11 @@ export default function CategoryPage() {
                       <Image
                         src={imageMap[globalIndex]}
                         alt={product.name}
-                        width={400}
-                        height={400}
+                        width={800}
+                        height={800}
                         className={`w-full h-full ${globalIndex === 0 ? 'object-cover' : 'object-contain'} group-hover:scale-105 transition-transform duration-200`}
-                        loading={globalIndex < 8 ? 'eager' : 'lazy'}
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Txz7/ACMZUqvSLSPJHHhkVpnHluxs5l/5+r/zZHfPafbhFNZ5EHCQcmnSAlQYl3JmP7m/2+nKQ9k3sxb"
+                        loading={globalIndex < 16 ? 'eager' : 'lazy'}
+                        priority={globalIndex < 8}
                       />
                     ) : (
                       <div className="text-slate-400 text-sm">Product {product.displayNumber}</div>
