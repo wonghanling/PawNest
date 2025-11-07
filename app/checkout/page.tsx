@@ -10,6 +10,19 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-12">
       <div className="container mx-auto px-6">
+        {/* 返回按钮 */}
+        <div className="mb-6">
+          <a
+            href="/product"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>继续购物</span>
+          </a>
+        </div>
+
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

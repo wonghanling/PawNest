@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Home() {
   return (
     <div className="bg-background-light dark:bg-background-dark">
@@ -8,7 +10,7 @@ export default function Home() {
         {/* 背景图片 */}
         <div className="absolute inset-0">
           <img
-            src="/1.jpg"
+            src="/optimized/01.jpg"
             alt="Happy pets"
             className="w-full h-full object-cover object-center"
           />
@@ -26,18 +28,23 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           {/* Shop by Category */}
           <section className="py-12 sm:py-16 md:py-24">
-            <div className="grid grid-cols-2 gap-4 md:gap-8 px-4 max-w-4xl mx-auto">
-              <div className="group cursor-pointer">
-                <div className="w-full bg-slate-200 dark:bg-slate-800 aspect-square rounded-xl overflow-hidden">
-                  <img src="/optimized/02.webp" alt="Dog" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                </div>
-                <p className="text-base md:text-lg font-semibold mt-4 text-center text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Dog</p>
+            <div className="px-4 max-w-4xl mx-auto">
+              <div className="flex justify-center mb-6">
+                <a href="/product?id=15" className="bg-blue-600 text-white rounded-lg h-10 sm:h-12 px-6 sm:px-8 text-sm md:text-base font-bold hover:bg-blue-700 transition-colors flex items-center justify-center" style={{textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'}}>tree nest</a>
               </div>
-              <div className="group cursor-pointer">
-                <div className="w-full bg-slate-200 dark:bg-slate-800 aspect-square rounded-xl overflow-hidden">
-                  <img src="/optimized/03.webp" alt="Cat" className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform duration-300" />
+              <div className="grid grid-cols-2 gap-4 md:gap-8">
+                <div className="group cursor-pointer">
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 aspect-square rounded-xl overflow-hidden">
+                    <img src="/optimized/02.webp" alt="Dog" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  <p className="text-base md:text-lg font-semibold mt-4 text-center text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Dog</p>
                 </div>
-                <p className="text-base md:text-lg font-semibold mt-4 text-center text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Cat</p>
+                <div className="group cursor-pointer">
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 aspect-square rounded-xl overflow-hidden">
+                    <img src="/optimized/03.webp" alt="Cat" className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                  <p className="text-base md:text-lg font-semibold mt-4 text-center text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Cat</p>
+                </div>
               </div>
             </div>
           </section>
@@ -45,72 +52,234 @@ export default function Home() {
           {/* Product Categories */}
           <section className="py-12 sm:py-16 md:py-24">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-slate-900 dark:text-white px-4">Product Categories</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 px-4">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 px-4 max-w-5xl mx-auto">
               {/* Comfort Living */}
               <a href="/category" className="group cursor-pointer">
-                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                   <img src="/optimized/04.webp" alt="Comfort Living" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Comfort Living</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">舒适生活</p>
+                  <p className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Comfort Living</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">舒适生活</p>
                 </div>
               </a>
 
               {/* Travel & Safety */}
               <a href="/category" className="group cursor-pointer">
-                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                   <img src="/optimized/05.webp" alt="Travel & Safety" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Travel & Safety</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">出行与安全</p>
+                  <p className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Travel & Safety</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">出行与安全</p>
                 </div>
               </a>
 
               {/* Care & Hygiene */}
               <a href="/category" className="group cursor-pointer">
-                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                   <img src="/optimized/06.webp" alt="Care & Hygiene" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Care & Hygiene</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">清洁与护理</p>
+                  <p className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Care & Hygiene</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">清洁与护理</p>
                 </div>
               </a>
 
               {/* Toys & Play */}
               <a href="/category" className="group cursor-pointer">
-                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                   <img src="/optimized/07.webp" alt="Toys & Play" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Toys & Play</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">玩具与互动</p>
+                  <p className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Toys & Play</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">玩具与互动</p>
                 </div>
               </a>
 
               {/* Smart & Home */}
               <a href="/category" className="group cursor-pointer">
-                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                   <img src="/optimized/08.webp" alt="Smart & Home" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Smart & Home</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">智能与家居</p>
+                  <p className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Smart & Home</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">智能与家居</p>
                 </div>
               </a>
 
               {/* Style & Wear */}
               <a href="/category" className="group cursor-pointer">
-                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-xl mb-3 md:mb-4 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <div className="w-full bg-white dark:bg-slate-800 aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                   <img src="/optimized/09.webp" alt="Style & Wear" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Style & Wear</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">时尚穿搭</p>
+                  <p className="text-xs md:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Style & Wear</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">时尚穿搭</p>
                 </div>
               </a>
+            </div>
+          </section>
+
+          {/* Featured Products */}
+          <section className="py-12 md:py-20 bg-slate-50 dark:bg-slate-800/50">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-8 md:mb-12">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">Featured Products</h2>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400">精选推荐</p>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+                {/* Product 119 */}
+                <a href="/product?id=119" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/119.webp"
+                      alt="Pet Product 119"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 119</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$255</p>
+                </a>
+
+                {/* Product 142 */}
+                <a href="/product?id=142" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/142.webp"
+                      alt="Pet Product 142"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 142</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$155</p>
+                </a>
+
+                {/* Product 133 */}
+                <a href="/product?id=133" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/133.webp"
+                      alt="Pet Product 133"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 133</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$195</p>
+                </a>
+
+                {/* Product 134 */}
+                <a href="/product?id=134" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/134.webp"
+                      alt="Pet Product 134"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 134</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$125</p>
+                </a>
+
+                {/* Product 135 */}
+                <a href="/product?id=135" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/135.webp"
+                      alt="Pet Product 135"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 135</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$245</p>
+                </a>
+
+                {/* Product 136 */}
+                <a href="/product?id=136" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/136.webp"
+                      alt="Pet Product 136"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 136</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$285</p>
+                </a>
+
+                {/* Product 137 */}
+                <a href="/product?id=137" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/137.webp"
+                      alt="Pet Product 137"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 137</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$305</p>
+                </a>
+
+                {/* Product 138 */}
+                <a href="/product?id=138" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/138.webp"
+                      alt="Pet Product 138"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 138</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$265</p>
+                </a>
+
+                {/* Product 141 */}
+                <a href="/product?id=141" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/141.webp"
+                      alt="Pet Product 141"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 141</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$295</p>
+                </a>
+
+                {/* Product 144 */}
+                <a href="/product?id=144" className="group">
+                  <div className="aspect-square bg-white dark:bg-slate-900 rounded-lg overflow-hidden mb-3">
+                    <Image
+                      src="/optimized/144.webp"
+                      alt="Pet Product 144"
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Pet Product 144</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">$235</p>
+                </a>
+              </div>
             </div>
           </section>
 
