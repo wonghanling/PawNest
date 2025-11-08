@@ -3010,7 +3010,12 @@ const productData: { [key: number]: {
 export default function ProductPage() {
   const { addToCart } = useCart()
   const searchParams = useSearchParams()
-  const productId = parseInt(searchParams.get('id') || '1')
+  let productId = parseInt(searchParams.get('id') || '1')
+
+  // Products 180 and 182 redirect to product 15
+  if (productId === 180 || productId === 182) {
+    productId = 15
+  }
 
   // 获取当前商品数据
   const product = productData[productId] || productData[1]
