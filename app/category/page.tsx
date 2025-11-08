@@ -387,7 +387,7 @@ export default function CategoryPage() {
                 {[1, 5, 10, 15, 19].map(page => (
                   <button
                     key={page}
-                    onClick={() => setCurrentPage(page)}
+                    onClick={() => changePage(page)}
                     className={`px-2.5 md:px-3 py-1 text-xs md:text-sm rounded-md transition-all ${
                       currentPage === page
                         ? 'bg-primary text-white'
