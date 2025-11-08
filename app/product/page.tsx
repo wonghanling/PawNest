@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 import { useCart } from '@/context/CartContext'
 import { useSearchParams } from 'next/navigation'
@@ -3007,7 +3007,7 @@ const productData: { [key: number]: {
   }
 }
 
-export default function ProductPage() {
+function ProductContent() {
   const { addToCart } = useCart()
   const searchParams = useSearchParams()
   let productId = parseInt(searchParams.get('id') || '1')
@@ -4043,5 +4043,31 @@ export default function ProductPage() {
         </div>
       )}
     </main>
+  )
+}
+
+export default function ProductPage() {
+  return (
+    <Suspense fallback={
+      <main className="flex-grow container mx-auto px-4 sm:px-6 py-8 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
+          <div className="flex flex-col gap-4">
+            <div className="aspect-square rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+            <div className="grid grid-cols-5 gap-4">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="aspect-square rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-3/4 animate-pulse"></div>
+            <div className="h-10 bg-slate-200 dark:bg-slate-700 rounded w-1/4 animate-pulse"></div>
+          </div>
+        </div>
+      </main>
+    }>
+      <ProductContent />
+    </Suspense>
   )
 }
