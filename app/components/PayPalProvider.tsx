@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
+import { PAYPAL_CLIENT_ID } from '../config/paypal'
 
 // PayPal SDK type definitions
 declare global {
@@ -59,10 +60,14 @@ export default function PayPalProvider({ children }: PayPalProviderProps) {
       return
     }
 
-    // Get client ID from environment
-    const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
+    // Get client ID from config
+    const clientId = PAYPAL_CLIENT_ID
+
+    console.log('PayPal Client ID:', clientId ? 'Found' : 'Not found', clientId?.substring(0, 10))
+
     if (!clientId) {
       setPaypalError('PayPal Client ID not configured')
+      console.error('NEXT_PUBLIC_PAYPAL_CLIENT_ID environment variable is missing')
       return
     }
 
