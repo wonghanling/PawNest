@@ -2,7 +2,8 @@
 export const paypalConfig = {
   clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
   clientSecret: process.env.PAYPAL_CLIENT_SECRET!,
-  environment: process.env.NODE_ENV === 'production' ? 'production' : 'sandbox',
+  // Force sandbox for testing - change to 'production' when ready for live payments
+  environment: 'sandbox',
   currency: 'USD',
 }
 
