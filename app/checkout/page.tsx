@@ -222,13 +222,6 @@ export default function CheckoutPage() {
                   <span className="text-blue-600 dark:text-blue-400">${(totalPrice + shippingFee).toFixed(2)}</span>
                 </div>
               </div>
-
-              <button
-                disabled={cart.length === 0 || paymentMethod !== 'paypal'}
-                className="w-full mt-6 bg-gray-400 text-white py-4 rounded-lg text-lg font-semibold cursor-not-allowed"
-              >
-                {cart.length === 0 ? 'Cart is Empty' : paymentMethod === 'paypal' ? 'Use PayPal Button Above' : 'Select PayPal to Continue'}
-              </button>
             </div>
           </div>
         </div>

@@ -13,6 +13,16 @@ const PAYPAL_API_BASE = paypalConfig.environment === 'production'
 
 // Get PayPal access token for server-side API calls
 export async function getPayPalAccessToken(): Promise<string> {
+  console.log('PayPal Config:', {
+    clientId: paypalConfig.clientId ? `${paypalConfig.clientId.substring(0, 10)}...` : 'Missing',
+    clientSecret: paypalConfig.clientSecret ? 'Present' : 'Missing',
+    environment: paypalConfig.environment
+  })
+
+  if (!paypalConfig.clientId || !paypalConfig.clientSecret) {
+    throw new Error(`PayPal credentials missing: clientId=${!!paypalConfig.clientId}, clientSecret=${!!paypalConfig.clientSecret}`)
+  }
+
   const auth = Buffer.from(`${paypalConfig.clientId}:${paypalConfig.clientSecret}`).toString('base64')
 
   const response = await fetch(`${PAYPAL_API_BASE}/v1/oauth2/token`, {
@@ -25,7 +35,9 @@ export async function getPayPalAccessToken(): Promise<string> {
   })
 
   if (!response.ok) {
-    throw new Error('Failed to get PayPal access token')
+    const errorText = await response.text()
+    console.error('PayPal auth error:', response.status, errorText)
+    throw new Error(`Failed to get PayPal access token: ${response.status} ${errorText}`)
   }
 
   const data = await response.json()

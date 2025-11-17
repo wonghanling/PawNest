@@ -24,6 +24,10 @@ export default function PayPalButton({
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    // Reset error state when amount changes (e.g., cart updated)
+    setError(null)
+    setIsLoading(true)
+
     if (!paypalLoaded || !paypalRef.current || !window.paypal) {
       setIsLoading(false)
       return
@@ -39,6 +43,9 @@ export default function PayPalButton({
         style,
         createOrder: async () => {
           try {
+            // Reset error state on new attempt
+            setError(null)
+
             // Call our API to create the order
             const response = await fetch('/api/paypal/create-order', {
               method: 'POST',
@@ -88,20 +95,22 @@ export default function PayPalButton({
             if (onError) {
               onError(errorMessage)
             }
+            // Don't setError here to allow retry
           }
         },
         onError: (err) => {
           console.error('PayPal Checkout Error:', err)
-          setError('Payment failed. Please try again.')
           if (onError) {
             onError(err instanceof Error ? err : new Error('PayPal checkout error'))
           }
+          // Don't setError here to allow retry
         },
         onCancel: () => {
           console.log('Payment cancelled by user')
           if (onCancel) {
             onCancel()
           }
+          // Don't setError here - cancellation is not an error
         },
       }).render(paypalRef.current).catch((err) => {
         console.error('Failed to render PayPal button:', err)
@@ -131,10 +140,17 @@ export default function PayPalButton({
       <div className="p-4 border border-red-200 rounded-lg bg-red-50">
         <p className="text-red-600 text-sm">{error}</p>
         <button
-          onClick={() => window.location.reload()}
-          className="mt-2 text-blue-600 hover:text-blue-800 text-sm underline"
+          onClick={() => {
+            setError(null)
+            setIsLoading(true)
+            // Trigger re-render by clearing and re-adding the button
+            if (paypalRef.current) {
+              paypalRef.current.innerHTML = ''
+            }
+          }}
+          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
         >
-          Try again
+          Retry Payment
         </button>
       </div>
     )
