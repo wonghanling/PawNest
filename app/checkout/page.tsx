@@ -1,14 +1,47 @@
 'use client'
 
+import { useState } from 'react'
 import { useCart } from '@/context/CartContext'
+import PayPalProvider from '../components/PayPalProvider'
+import PayPalButton from '../components/PayPalButton'
+import { PayPalCaptureResponse } from '../../types/paypal'
 
 export default function CheckoutPage() {
   const { cart, getTotalPrice, updateQuantity, removeFromCart } = useCart()
   const totalPrice = getTotalPrice()
   const shippingFee = 20
+  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'stripe'>('paypal')
+  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle')
+
+  const handlePaymentSuccess = async (details: PayPalCaptureResponse) => {
+    setPaymentStatus('success')
+
+    try {
+      // Clear the cart after successful payment
+      cart.forEach(item => removeFromCart(item.id))
+
+      // Here you could redirect to a success page
+      alert('Payment successful! Order ID: ' + details.id)
+
+    } catch (error) {
+      console.error('Error handling payment success:', error)
+    }
+  }
+
+  const handlePaymentError = (error: Error) => {
+    setPaymentStatus('error')
+    console.error('Payment error:', error)
+    alert('Payment failed: ' + error.message)
+  }
+
+  const handlePaymentCancel = () => {
+    setPaymentStatus('idle')
+    alert('Payment cancelled')
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-12">
+    <PayPalProvider>
+      <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-12">
       <div className="container mx-auto px-6">
         {/* 返回按钮 */}
         <div className="mb-6">
@@ -108,16 +141,68 @@ export default function CheckoutPage() {
             {/* 支付方式选择 */}
             <div className="bg-white dark:bg-slate-800 border-4 border-gray-300 dark:border-slate-700 rounded-lg p-8">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">Payment Method</h2>
-              <div className="space-y-4">
+
+              {paymentStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-100 border border-green-300 rounded-lg">
+                  <p className="text-green-800 text-center">Payment successful! 🎉</p>
+                </div>
+              )}
+
+              {paymentStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-100 border border-red-300 rounded-lg">
+                  <p className="text-red-800 text-center">Payment failed. Please try again.</p>
+                </div>
+              )}
+
+              <div className="space-y-4 mb-6">
                 <label className="flex items-center p-4 border-2 border-gray-300 dark:border-slate-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-500 transition">
-                  <input type="radio" name="payment" className="mr-3" defaultChecked />
-                  <span className="text-gray-700 dark:text-slate-300 font-medium">Credit/Debit Card (Stripe)</span>
-                </label>
-                <label className="flex items-center p-4 border-2 border-gray-300 dark:border-slate-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-500 transition">
-                  <input type="radio" name="payment" className="mr-3" />
+                  <input
+                    type="radio"
+                    name="payment"
+                    className="mr-3"
+                    checked={paymentMethod === 'paypal'}
+                    onChange={() => setPaymentMethod('paypal')}
+                  />
                   <span className="text-gray-700 dark:text-slate-300 font-medium">PayPal</span>
                 </label>
+                <label className="flex items-center p-4 border-2 border-gray-300 dark:border-slate-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-500 transition">
+                  <input
+                    type="radio"
+                    name="payment"
+                    className="mr-3"
+                    checked={paymentMethod === 'stripe'}
+                    onChange={() => setPaymentMethod('stripe')}
+                  />
+                  <span className="text-gray-700 dark:text-slate-300 font-medium">Credit/Debit Card (Coming Soon)</span>
+                </label>
               </div>
+
+              {/* PayPal Payment Button */}
+              {paymentMethod === 'paypal' && cart.length > 0 && (
+                <div className="mt-6">
+                  <PayPalButton
+                    amount={(totalPrice + shippingFee).toFixed(2)}
+                    currency="USD"
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                    onCancel={handlePaymentCancel}
+                    style={{
+                      layout: 'vertical',
+                      color: 'gold',
+                      shape: 'rect',
+                      label: 'checkout',
+                      height: 55,
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Stripe Payment (Coming Soon) */}
+              {paymentMethod === 'stripe' && (
+                <div className="mt-6 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg text-center">
+                  <p className="text-gray-600 dark:text-slate-400">Credit card payment coming soon!</p>
+                </div>
+              )}
             </div>
 
             {/* 订单汇总 */}
@@ -139,15 +224,16 @@ export default function CheckoutPage() {
               </div>
 
               <button
-                disabled={cart.length === 0}
-                className="w-full mt-6 bg-blue-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+                disabled={cart.length === 0 || paymentMethod !== 'paypal'}
+                className="w-full mt-6 bg-gray-400 text-white py-4 rounded-lg text-lg font-semibold cursor-not-allowed"
               >
-                {cart.length === 0 ? 'Cart is Empty' : 'Proceed to Payment'}
+                {cart.length === 0 ? 'Cart is Empty' : paymentMethod === 'paypal' ? 'Use PayPal Button Above' : 'Select PayPal to Continue'}
               </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PayPalProvider>
   )
 }
