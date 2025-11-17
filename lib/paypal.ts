@@ -2,8 +2,8 @@
 export const paypalConfig = {
   clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
   clientSecret: process.env.PAYPAL_CLIENT_SECRET!,
-  // Force sandbox for testing - change to 'production' when ready for live payments
-  environment: 'sandbox',
+  // Switch to production for live payments
+  environment: 'production',
   currency: 'USD',
 }
 
@@ -67,8 +67,8 @@ export async function createPayPalOrder(amount: string, currency: string = 'USD'
         brand_name: 'PawNest',
         landing_page: 'NO_PREFERENCE',
         user_action: 'PAY_NOW',
-        return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/payment/success`,
-        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/payment/cancel`,
+        return_url: `https://www.pawnesting.com/payment/success`,
+        cancel_url: `https://www.pawnesting.com/payment/cancel`,
       },
     }),
   })
