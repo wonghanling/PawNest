@@ -19,6 +19,17 @@ export default function CheckoutPage() {
   const [customerPhone, setCustomerPhone] = useState('')
   const [customerAddress, setCustomerAddress] = useState('')
 
+  // 检查表单是否填写完整
+  const isFormValid = () => {
+    return (
+      customerName.trim() !== '' &&
+      customerEmail.trim() !== '' &&
+      customerPhone.trim() !== '' &&
+      customerAddress.trim() !== '' &&
+      cart.length > 0
+    )
+  }
+
   const handlePaymentSuccess = async (details: PayPalCaptureResponse) => {
     setPaymentStatus('success')
 
@@ -158,7 +169,9 @@ export default function CheckoutPage() {
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Shipping Address</h2>
               <form className="space-y-4">
                 <div>
-                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Full Name</label>
+                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     value={customerName}
@@ -169,7 +182,9 @@ export default function CheckoutPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Email</label>
+                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="email"
                     value={customerEmail}
@@ -180,17 +195,22 @@ export default function CheckoutPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Phone Number</label>
+                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="tel"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     className="w-full border-2 border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-3 focus:border-blue-500 outline-none"
                     placeholder="Enter your phone"
+                    required
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Address</label>
+                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">
+                    Address <span className="text-red-500">*</span>
+                  </label>
                   <textarea
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
@@ -246,22 +266,38 @@ export default function CheckoutPage() {
               </div>
 
               {/* PayPal Payment Button */}
-              {paymentMethod === 'paypal' && cart.length > 0 && (
+              {paymentMethod === 'paypal' && (
                 <div className="mt-6">
-                  <PayPalButton
-                    amount={(totalPrice + shippingFee).toFixed(2)}
-                    currency="USD"
-                    onSuccess={handlePaymentSuccess}
-                    onError={handlePaymentError}
-                    onCancel={handlePaymentCancel}
-                    style={{
-                      layout: 'vertical',
-                      color: 'gold',
-                      shape: 'rect',
-                      label: 'checkout',
-                      height: 55,
-                    }}
-                  />
+                  {!isFormValid() ? (
+                    <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-300 dark:border-yellow-800 rounded-lg">
+                      <p className="text-yellow-800 dark:text-yellow-200 text-center font-medium">
+                        Please fill in all required information to proceed with payment
+                      </p>
+                      <ul className="mt-2 text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
+                        {!customerName.trim() && <li>• Full Name is required</li>}
+                        {!customerEmail.trim() && <li>• Email is required</li>}
+                        {!customerPhone.trim() && <li>• Phone Number is required</li>}
+                        {!customerAddress.trim() && <li>• Address is required</li>}
+                        {cart.length === 0 && <li>• Cart is empty</li>}
+                      </ul>
+                    </div>
+                  ) : (
+                    <PayPalButton
+                      key={`paypal-${totalPrice}-${cart.length}`}
+                      amount={(totalPrice + shippingFee).toFixed(2)}
+                      currency="USD"
+                      onSuccess={handlePaymentSuccess}
+                      onError={handlePaymentError}
+                      onCancel={handlePaymentCancel}
+                      style={{
+                        layout: 'vertical',
+                        color: 'gold',
+                        shape: 'rect',
+                        label: 'checkout',
+                        height: 55,
+                      }}
+                    />
+                  )}
                 </div>
               )}
 
