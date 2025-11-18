@@ -13,18 +13,64 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'stripe'>('paypal')
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle')
 
+  // 表单状态
+  const [customerName, setCustomerName] = useState('')
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
+  const [customerAddress, setCustomerAddress] = useState('')
+
   const handlePaymentSuccess = async (details: PayPalCaptureResponse) => {
     setPaymentStatus('success')
 
     try {
-      // Clear the cart after successful payment
-      cart.forEach(item => removeFromCart(item.id))
+      // 准备订单数据
+      const orderData = {
+        customerName: customerName || 'Guest Customer',
+        customerEmail: customerEmail || 'guest@example.com',
+        customerPhone: customerPhone || '',
+        customerAddress: customerAddress || 'Address not provided',
+        totalAmount: (totalPrice + shippingFee),
+        shippingFee: shippingFee,
+        paymentMethod: 'paypal',
+        paymentStatus: 'completed',
+        paypalTransactionId: details.id,
+        items: cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          variant: item.variant
+        }))
+      }
 
-      // Here you could redirect to a success page
-      alert('Payment successful! Order ID: ' + details.id)
+      console.log('Saving order:', orderData)
+
+      // 保存订单到 Supabase
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData)
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        console.log('Order saved successfully:', result)
+
+        // 清空购物车
+        cart.forEach(item => removeFromCart(item.id))
+
+        // 显示成功消息，包含订单号
+        alert(`Payment successful! 🎉\nOrder Number: ${result.order.order_number}\nTransaction ID: ${details.id}`)
+      } else {
+        console.error('Failed to save order')
+        alert('Payment successful but failed to save order. Please contact support.')
+      }
 
     } catch (error) {
       console.error('Error handling payment success:', error)
+      alert('Payment successful but there was an issue processing your order.')
     }
   }
 
@@ -112,14 +158,30 @@ export default function CheckoutPage() {
                   <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Full Name</label>
                   <input
                     type="text"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
                     className="w-full border-2 border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-3 focus:border-blue-500 outline-none"
                     placeholder="Enter your name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Email</label>
+                  <input
+                    type="email"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                    className="w-full border-2 border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-3 focus:border-blue-500 outline-none"
+                    placeholder="Enter your email"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Phone Number</label>
                   <input
                     type="tel"
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
                     className="w-full border-2 border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-3 focus:border-blue-500 outline-none"
                     placeholder="Enter your phone"
                   />
@@ -127,9 +189,12 @@ export default function CheckoutPage() {
                 <div>
                   <label className="block text-gray-700 dark:text-slate-300 font-medium mb-2">Address</label>
                   <textarea
+                    value={customerAddress}
+                    onChange={(e) => setCustomerAddress(e.target.value)}
                     className="w-full border-2 border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-3 focus:border-blue-500 outline-none"
                     rows={3}
                     placeholder="Enter your address"
+                    required
                   />
                 </div>
               </form>
