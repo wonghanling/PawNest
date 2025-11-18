@@ -34,8 +34,10 @@ export default function CheckoutPage() {
         paymentMethod: 'paypal',
         paymentStatus: 'completed',
         paypalTransactionId: details.id,
-        items: cart.map((item, index) => ({
-          itemPosition: `第${index + 1}个商品`,
+        items: cart.map((item) => ({
+          itemPosition: item.pageNumber && item.itemPosition
+            ? `第${item.pageNumber}页第${item.itemPosition}个`
+            : '位置未知',
           id: item.id,
           name: item.name,
           price: item.price,

@@ -3695,10 +3695,16 @@ function ProductContent() {
           }
 
           for (let i = 0; i < qty; i++) {
+            // Calculate page number and position in category list
+            const pageNumber = Math.ceil(productId / 8)
+            const itemPosition = ((productId - 1) % 8) + 1
+
             addToCart({
               id: Date.now() + Math.random(),
               name: `${product.name} - Spec ${specId} - ${size}`,
-              price: itemPrice
+              price: itemPrice,
+              pageNumber: pageNumber,
+              itemPosition: itemPosition
             })
             totalAdded++
           }
@@ -3712,10 +3718,16 @@ function ProductContent() {
       Object.entries(sizes).forEach(([size, qty]) => {
         if (qty > 0) {
           for (let i = 0; i < qty; i++) {
+            // Calculate page number and position in category list
+            const pageNumber = Math.ceil(productId / 8)
+            const itemPosition = ((productId - 1) % 8) + 1
+
             addToCart({
               id: Date.now() + Math.random(),
               name: `${product.name} - ${colorName} - ${size}`,
-              price: product.price
+              price: product.price,
+              pageNumber: pageNumber,
+              itemPosition: itemPosition
             })
             totalAdded++
           }

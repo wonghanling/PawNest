@@ -7,6 +7,8 @@ interface CartItem {
   name: string
   price: number
   quantity: number
+  pageNumber?: number
+  itemPosition?: number
 }
 
 interface CartContextType {
