@@ -1,10 +1,8 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback } from 'react'
 import { useCart } from '@/context/CartContext'
-import PayPalProvider from '../components/PayPalProvider'
-import PayPalButton from '../components/PayPalButton'
-import { PayPalCaptureResponse } from '../../types/paypal'
+import { PaypalCheckoutButton } from '../components/PaypalCheckoutButton'
 
 export default function CheckoutPage() {
   const { cart, getTotalPrice, updateQuantity, removeFromCart } = useCart()
@@ -30,21 +28,7 @@ export default function CheckoutPage() {
     )
   }
 
-  // 稳定化PayPal按钮的amount，避免小数点精度问题导致不必要的重新渲染
-  const stableAmount = useMemo(() => {
-    const total = totalPrice + shippingFee
-    return Number(total.toFixed(2))
-  }, [totalPrice, shippingFee])
-
-  // 为PayPal按钮生成稳定的key，只在金额发生实质性变化时才改变
-  const paypalButtonKey = useMemo(() => {
-    // 使用稳定的金额和购物车商品数量来生成key
-    const amountCents = Math.round(stableAmount * 100)
-    const cartItemCount = cart.length
-    return `paypal-${amountCents}-items-${cartItemCount}`
-  }, [stableAmount, cart.length])
-
-  const handlePaymentSuccess = useCallback(async (details: PayPalCaptureResponse) => {
+  const handlePaymentSuccess = useCallback(async (details: any) => {
     setPaymentStatus('success')
 
     try {
@@ -102,20 +86,8 @@ export default function CheckoutPage() {
     }
   }, [customerName, customerEmail, customerPhone, customerAddress, totalPrice, shippingFee, cart, removeFromCart])
 
-  const handlePaymentError = useCallback((error: Error) => {
-    setPaymentStatus('error')
-    console.error('Payment error:', error)
-    alert('Payment failed: ' + error.message)
-  }, [])
-
-  const handlePaymentCancel = useCallback(() => {
-    setPaymentStatus('idle')
-    alert('Payment cancelled')
-  }, [])
-
   return (
-    <PayPalProvider>
-      <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-background-dark py-12">
       <div className="container mx-auto px-6">
         {/* 返回按钮 */}
         <div className="mb-6">
@@ -282,24 +254,15 @@ export default function CheckoutPage() {
               {/* PayPal Payment Button */}
               {paymentMethod === 'paypal' && (
                 <div className="mt-6 relative">
-                  {/* PayPal Button - Memoized to prevent unnecessary re-renders */}
-                  <div
-                    className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}
-                    key="paypal-container-stable"
-                  >
-                    <PayPalButton
-                      key="paypal-stable"
-                      amount={stableAmount.toFixed(2)}
-                      currency="USD"
+                  {/* PayPal按钮 - 只根据总金额变化重新渲染 */}
+                  <div className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}>
+                    <PaypalCheckoutButton
+                      total={totalPrice + shippingFee}
                       onSuccess={handlePaymentSuccess}
-                      onError={handlePaymentError}
-                      onCancel={handlePaymentCancel}
-                      style={{
-                        layout: 'vertical',
-                        color: 'gold',
-                        shape: 'rect',
-                        label: 'checkout',
-                        height: 55,
+                      onError={(err) => {
+                        setPaymentStatus('error')
+                        console.error('Payment error:', err)
+                        alert('Payment failed. Please try again.')
                       }}
                     />
                   </div>

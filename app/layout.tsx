@@ -5,12 +5,19 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["400", "500", "700", "800"],
 });
+
+const paypalOptions = {
+  clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '',
+  currency: "USD",
+  intent: "capture",
+};
 
 export default function RootLayout({
   children,
@@ -24,8 +31,10 @@ export default function RootLayout({
       >
         <AuthProvider>
           <CartProvider>
-            <Navbar />
-            {children}
+            <PayPalScriptProvider options={paypalOptions}>
+              <Navbar />
+              {children}
+            </PayPalScriptProvider>
           </CartProvider>
         </AuthProvider>
       </body>
