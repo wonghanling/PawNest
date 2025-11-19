@@ -2,8 +2,8 @@ export default function AboutPage() {
   return (
     <main className="flex-1 px-4 sm:px-8 md:px-16 lg:px-40 py-8 md:py-12">
       <div className="mx-auto max-w-[960px]">
-        <div className="w-full h-[300px] md:h-[400px] bg-slate-200 dark:bg-slate-800 rounded-xl flex items-center justify-center">
-          <p className="text-slate-500 dark:text-slate-400">🖼️ Hero Image</p>
+        <div className="w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden">
+          <img src="/details/2061.webp" alt="About Us Hero" className="w-full h-full object-cover" />
         </div>
 
         <section className="py-12 md:py-20 text-center">
@@ -18,7 +18,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <div className="bg-white dark:bg-slate-800/50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="w-full aspect-square bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
-                <img src="/details/2061.webp" alt="Organic Cotton" className="w-full h-full object-cover" />
+                <img src="/details/2062.webp" alt="Organic Cotton" className="w-full h-full object-cover" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Organic Cotton</h3>
@@ -27,7 +27,7 @@ export default function AboutPage() {
             </div>
             <div className="bg-white dark:bg-slate-800/50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="w-full aspect-square bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
-                <img src="/details/2062.webp" alt="Recycled Polyester" className="w-full h-full object-cover" />
+                <img src="/details/2063.webp" alt="Recycled Polyester" className="w-full h-full object-cover" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Recycled Polyester</h3>
@@ -36,7 +36,7 @@ export default function AboutPage() {
             </div>
             <div className="bg-white dark:bg-slate-800/50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="w-full aspect-square bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
-                <img src="/details/2063.webp" alt="Natural Dyes" className="w-full h-full object-cover" />
+                <img src="/details/2064.webp" alt="Natural Dyes" className="w-full h-full object-cover" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Natural Dyes</h3>
@@ -86,12 +86,6 @@ export default function AboutPage() {
                 <p className="text-slate-700 dark:text-slate-300">Recognized with the &quot;Eco-Excellence Award&quot; for our unwavering commitment to environmental responsibility and innovative use of recycled materials in our product line.</p>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="py-12 md:py-16">
-          <div className="w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden">
-            <img src="/details/2064.webp" alt="Our Commitment" className="w-full h-full object-cover" />
           </div>
         </section>
       </div>

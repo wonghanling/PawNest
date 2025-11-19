@@ -207,7 +207,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Visit Us</h3>
-                      <p className="text-slate-600 dark:text-slate-400">123 Pet Street, Animal City, 12345</p>
+                      <p className="text-slate-600 dark:text-slate-400">Rm 1603, 16/F, The L. Plaza, 367-375 Queen's Road Central, Sheung Wan, Hong Kong</p>
                     </div>
                   </div>
                   <div className="w-full h-48 bg-slate-200 dark:bg-slate-700 rounded-lg overflow-hidden flex items-center justify-center">
@@ -225,7 +225,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Call Us</h3>
-                      <p className="text-slate-600 dark:text-slate-400">+1 (555) 123-4567</p>
+                      <p className="text-slate-600 dark:text-slate-400">+86 18761538890</p>
                     </div>
                   </div>
                 </div>
@@ -240,7 +240,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Email Us</h3>
-                      <p className="text-slate-600 dark:text-slate-400">support@pethaven.com</p>
+                      <p className="text-slate-600 dark:text-slate-400">wanghaojie@claudioweb.cn</p>
+                      <p className="text-slate-600 dark:text-slate-400">gudj424896@gmail.com</p>
                     </div>
                   </div>
                 </div>
