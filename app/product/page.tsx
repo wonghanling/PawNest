@@ -5032,23 +5032,23 @@ function ProductContent() {
 
                       <div className="grid grid-cols-2 gap-1.5">
                         {sizes.map((item) => (
-                          <div key={item.size} className="flex items-center justify-between px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
-                            <span className="text-xs font-semibold text-slate-900 dark:text-slate-200">{item.size}</span>
-                            <div className="flex items-center gap-1">
+                          <div key={item.size} className="flex items-center justify-between px-2 py-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+                            <span className="text-sm font-semibold text-slate-900 dark:text-slate-200">{item.size}</span>
+                            <div className="flex items-center gap-1.5">
                               <button
                                 onClick={() => updateColorSizeQuantity(colorId, item.size, -1)}
-                                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                className="w-8 h-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
                               >
-                                <span className="text-xs text-slate-600 dark:text-slate-300">−</span>
+                                <span className="text-base text-slate-600 dark:text-slate-300">−</span>
                               </button>
-                              <span className="w-6 text-center text-xs font-medium text-slate-900 dark:text-slate-200">
+                              <span className="w-8 text-center text-sm font-medium text-slate-900 dark:text-slate-200">
                                 {colorSizeQuantities[colorId]?.[item.size] || 0}
                               </span>
                               <button
                                 onClick={() => updateColorSizeQuantity(colorId, item.size, 1)}
-                                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                className="w-8 h-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
                               >
-                                <span className="text-xs text-slate-600 dark:text-slate-300">+</span>
+                                <span className="text-base text-slate-600 dark:text-slate-300">+</span>
                               </button>
                             </div>
                           </div>
@@ -5085,18 +5085,18 @@ function ProductContent() {
                                   updateColorSizeQuantity(colorId, 'onesize', -1)
                                 }
                               }}
-                              className="w-8 h-8 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
+                              className="w-12 h-12 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
                             >
-                              <span className="text-lg text-slate-700 dark:text-slate-200">−</span>
+                              <span className="text-xl text-slate-700 dark:text-slate-200">−</span>
                             </button>
                             <span className="w-12 text-center text-base font-semibold text-slate-900 dark:text-slate-200">
                               {quantity}
                             </span>
                             <button
                               onClick={() => updateColorSizeQuantity(colorId, 'onesize', 1)}
-                              className="w-8 h-8 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
+                              className="w-12 h-12 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
                             >
-                              <span className="text-lg text-slate-700 dark:text-slate-200">+</span>
+                              <span className="text-xl text-slate-700 dark:text-slate-200">+</span>
                             </button>
                           </div>
                           <button
@@ -5141,26 +5141,26 @@ function ProductContent() {
                           const spec = specifications.find(s => s.id === parseInt(specId))
                           if (spec && spec.sizes) {
                             return Object.entries(spec.sizes).map(([size, price]) => (
-                              <div key={size} className="flex items-center justify-between px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+                              <div key={size} className="flex items-center justify-between px-2 py-1.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
                                 <div className="flex flex-col">
-                                  <span className="text-xs font-semibold text-slate-900 dark:text-slate-200">{size}</span>
-                                  <span className="text-xs text-slate-600 dark:text-slate-400">${price}</span>
+                                  <span className="text-sm font-semibold text-slate-900 dark:text-slate-200">{size}</span>
+                                  <span className="text-sm text-slate-600 dark:text-slate-400">${price}</span>
                                 </div>
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1.5">
                                   <button
                                     onClick={() => updateSpecSizeQuantity(parseInt(specId), size, -1)}
-                                    className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                    className="w-8 h-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
                                   >
-                                    <span className="text-xs text-slate-600 dark:text-slate-300">−</span>
+                                    <span className="text-base text-slate-600 dark:text-slate-300">−</span>
                                   </button>
-                                  <span className="w-6 text-center text-xs font-medium text-slate-900 dark:text-slate-200">
+                                  <span className="w-8 text-center text-sm font-medium text-slate-900 dark:text-slate-200">
                                     {specSizeQuantities[parseInt(specId)]?.[size] || 0}
                                   </span>
                                   <button
                                     onClick={() => updateSpecSizeQuantity(parseInt(specId), size, 1)}
-                                    className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                    className="w-8 h-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
                                   >
-                                    <span className="text-xs text-slate-600 dark:text-slate-300">+</span>
+                                    <span className="text-base text-slate-600 dark:text-slate-300">+</span>
                                   </button>
                                 </div>
                               </div>
@@ -5181,18 +5181,18 @@ function ProductContent() {
                             <div className="flex items-center gap-1">
                               <button
                                 onClick={() => updateSpecSizeQuantity(parseInt(specId), item.size, -1)}
-                                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                className="w-8 h-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
                               >
-                                <span className="text-xs text-slate-600 dark:text-slate-300">−</span>
+                                <span className="text-sm text-slate-600 dark:text-slate-300">−</span>
                               </button>
-                              <span className="w-6 text-center text-xs font-medium text-slate-900 dark:text-slate-200">
+                              <span className="w-8 text-center text-sm font-medium text-slate-900 dark:text-slate-200">
                                 {specSizeQuantities[parseInt(specId)]?.[item.size] || 0}
                               </span>
                               <button
                                 onClick={() => updateSpecSizeQuantity(parseInt(specId), item.size, 1)}
-                                className="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                className="w-8 h-8 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors"
                               >
-                                <span className="text-xs text-slate-600 dark:text-slate-300">+</span>
+                                <span className="text-sm text-slate-600 dark:text-slate-300">+</span>
                               </button>
                             </div>
                           </div>
@@ -5240,18 +5240,18 @@ function ProductContent() {
                                   updateSpecSizeQuantity(parseInt(specId), 'onesize', -1)
                                 }
                               }}
-                              className="w-8 h-8 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
+                              className="w-12 h-12 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
                             >
-                              <span className="text-lg text-slate-700 dark:text-slate-200">−</span>
+                              <span className="text-xl text-slate-700 dark:text-slate-200">−</span>
                             </button>
                             <span className="w-12 text-center text-base font-semibold text-slate-900 dark:text-slate-200">
                               {quantity}
                             </span>
                             <button
                               onClick={() => updateSpecSizeQuantity(parseInt(specId), 'onesize', 1)}
-                              className="w-8 h-8 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
+                              className="w-12 h-12 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center transition-colors"
                             >
-                              <span className="text-lg text-slate-700 dark:text-slate-200">+</span>
+                              <span className="text-xl text-slate-700 dark:text-slate-200">+</span>
                             </button>
                           </div>
                           <button

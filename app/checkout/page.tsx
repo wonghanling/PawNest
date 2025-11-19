@@ -267,23 +267,11 @@ export default function CheckoutPage() {
 
               {/* PayPal Payment Button */}
               {paymentMethod === 'paypal' && (
-                <div className="mt-6">
-                  {!isFormValid() ? (
-                    <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-300 dark:border-yellow-800 rounded-lg">
-                      <p className="text-yellow-800 dark:text-yellow-200 text-center font-medium">
-                        Please fill in all required information to proceed with payment
-                      </p>
-                      <ul className="mt-2 text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
-                        {!customerName.trim() && <li>• Full Name is required</li>}
-                        {!customerEmail.trim() && <li>• Email is required</li>}
-                        {!customerPhone.trim() && <li>• Phone Number is required</li>}
-                        {!customerAddress.trim() && <li>• Address is required</li>}
-                        {cart.length === 0 && <li>• Cart is empty</li>}
-                      </ul>
-                    </div>
-                  ) : (
+                <div className="mt-6 relative">
+                  {/* PayPal Button - Always rendered */}
+                  <div className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}>
                     <PayPalButton
-                      key={`paypal-${totalPrice}-${cart.length}`}
+                      key={`paypal-button`}
                       amount={(totalPrice + shippingFee).toFixed(2)}
                       currency="USD"
                       onSuccess={handlePaymentSuccess}
@@ -297,6 +285,24 @@ export default function CheckoutPage() {
                         height: 55,
                       }}
                     />
+                  </div>
+
+                  {/* Overlay message when form is incomplete */}
+                  {!isFormValid() && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white/95 dark:bg-slate-800/95 rounded-lg p-4">
+                      <div className="text-center">
+                        <p className="text-gray-800 dark:text-white font-medium mb-2">
+                          Please complete all required fields
+                        </p>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                          {!customerName.trim() && <div>• Full Name</div>}
+                          {!customerEmail.trim() && <div>• Email</div>}
+                          {!customerPhone.trim() && <div>• Phone Number</div>}
+                          {!customerAddress.trim() && <div>• Address</div>}
+                          {cart.length === 0 && <div>• Cart is empty</div>}
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
