@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { useCart } from '@/context/CartContext'
 import PayPalProvider from '../components/PayPalProvider'
 import PayPalButton from '../components/PayPalButton'
@@ -29,6 +29,20 @@ export default function CheckoutPage() {
       cart.length > 0
     )
   }
+
+  // 稳定化PayPal按钮的amount，避免小数点精度问题导致不必要的重新渲染
+  const stableAmount = useMemo(() => {
+    const total = totalPrice + shippingFee
+    return Number(total.toFixed(2))
+  }, [totalPrice, shippingFee])
+
+  // 为PayPal按钮生成稳定的key，只在金额发生实质性变化时才改变
+  const paypalButtonKey = useMemo(() => {
+    // 使用稳定的金额和购物车商品数量来生成key
+    const amountCents = Math.round(stableAmount * 100)
+    const cartItemCount = cart.length
+    return `paypal-${amountCents}-items-${cartItemCount}`
+  }, [stableAmount, cart.length])
 
   const handlePaymentSuccess = useCallback(async (details: PayPalCaptureResponse) => {
     setPaymentStatus('success')
@@ -274,8 +288,8 @@ export default function CheckoutPage() {
                     key="paypal-container-stable"
                   >
                     <PayPalButton
-                      key={`paypal-${Math.floor((totalPrice + shippingFee) * 100)}`}
-                      amount={(totalPrice + shippingFee).toFixed(2)}
+                      key={paypalButtonKey}
+                      amount={stableAmount.toFixed(2)}
                       currency="USD"
                       onSuccess={handlePaymentSuccess}
                       onError={handlePaymentError}

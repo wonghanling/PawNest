@@ -28,7 +28,10 @@ export default function PayPalButton({
     setError(null)
     setIsLoading(true)
 
+    console.log('PayPal Button initializing with amount:', amount)
+
     if (!paypalLoaded || !paypalRef.current || !window.paypal) {
+      console.log('PayPal not ready:', { paypalLoaded, hasRef: !!paypalRef.current, hasWindow: !!window.paypal })
       setIsLoading(false)
       return
     }
@@ -63,6 +66,7 @@ export default function PayPalButton({
             }
 
             const order = await response.json()
+            console.log('PayPal order created:', order.id)
             return order.id
           } catch (error) {
             console.error('Error creating PayPal order:', error)
@@ -112,12 +116,15 @@ export default function PayPalButton({
           }
           // Don't setError here - cancellation is not an error
         },
-      }).render(paypalRef.current).catch((err) => {
+      }).render(paypalRef.current).then(() => {
+        console.log('PayPal button rendered successfully')
+        setIsLoading(false)
+      }).catch((err) => {
         console.error('Failed to render PayPal button:', err)
         setError('Failed to load payment button')
+        setIsLoading(false)
       })
 
-      setIsLoading(false)
     } catch (err) {
       console.error('Error setting up PayPal button:', err)
       setError('Failed to initialize payment')
