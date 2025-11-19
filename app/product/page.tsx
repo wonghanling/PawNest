@@ -3746,8 +3746,14 @@ function ProductContent() {
     }
   }
 
+  // 获取所有可用的商品ID
+  const allProductIds = Object.keys(productData).map(id => parseInt(id)).sort((a, b) => a - b)
+  const currentIndex = allProductIds.indexOf(productId)
+  const prevProductId = currentIndex > 0 ? allProductIds[currentIndex - 1] : null
+  const nextProductId = currentIndex < allProductIds.length - 1 ? allProductIds[currentIndex + 1] : null
+
   return (
-    <main className="flex-grow container mx-auto px-4 sm:px-6 py-8 md:py-12">
+    <main className="flex-grow container mx-auto px-4 sm:px-6 py-8 md:py-12 relative">
       {/* 返回按钮 */}
       <div className="mb-6">
         <button
@@ -3760,6 +3766,31 @@ function ProductContent() {
           <span>返回商品列表</span>
         </button>
       </div>
+
+      {/* 翻页按钮 - 固定在两侧 */}
+      {prevProductId && (
+        <button
+          onClick={() => window.location.href = `/product?id=${prevProductId}`}
+          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+          aria-label="上一个商品"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
+
+      {nextProductId && (
+        <button
+          onClick={() => window.location.href = `/product?id=${nextProductId}`}
+          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+          aria-label="下一个商品"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
         {/* 左侧：产品图片 */}
