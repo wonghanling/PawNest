@@ -22,162 +22,82 @@ export default function PayPalButton({
   const paypalRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const currentAmountRef = useRef<string>('')
-  const paypalButtonInstance = useRef<any>(null)
 
-  // 只在PayPal加载后初始化一次，之后只更新金额
   useEffect(() => {
-    console.log('PayPal useEffect triggered:', {
-      paypalLoaded,
-      hasRef: !!paypalRef.current,
-      hasWindow: !!window.paypal
-    })
-
     if (!paypalLoaded) {
-      console.log('PayPal not loaded yet, setting loading false')
       setIsLoading(false)
       return
     }
 
     if (!window.paypal) {
-      console.log('PayPal window object not available, setting loading false')
       setIsLoading(false)
       return
     }
 
     if (!paypalRef.current) {
-      console.log('PayPal ref not ready, setting loading false')
       setIsLoading(false)
       return
     }
 
-    console.log('PayPal loaded, initializing button once')
-
-    const initializeOnce = async () => {
+    const initializePayPal = async () => {
       try {
         setIsLoading(true)
         setError(null)
 
-        // 清除已有内容
-        if (paypalRef.current) {
-          paypalRef.current.innerHTML = ''
-        }
+        // 清除现有内容
+        paypalRef.current!.innerHTML = ''
 
         // 创建PayPal按钮
-        const buttons = window.paypal.Buttons({
+        await window.paypal.Buttons({
           style,
           createOrder: async () => {
-            try {
-              // 使用当前的amount值
-              const currentAmount = currentAmountRef.current || amount
-              console.log('Creating order with amount:', currentAmount)
-
-              const response = await fetch('/api/paypal/create-order', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  amount: currentAmount,
-                  currency,
-                }),
-              })
-
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`)
-              }
-
-              const order = await response.json()
-              console.log('PayPal order created:', order.id)
-              return order.id
-            } catch (error) {
-              console.error('Error creating PayPal order:', error)
-              setError('Failed to create payment order')
-              throw error
-            }
+            const response = await fetch('/api/paypal/create-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ amount, currency }),
+            })
+            const order = await response.json()
+            return order.id
           },
           onApprove: async (data) => {
-            try {
-              const response = await fetch('/api/paypal/capture-order', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  orderID: data.orderID,
-                }),
-              })
-
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`)
-              }
-
-              const details = await response.json()
-              onSuccess(details)
-            } catch (error) {
-              console.error('Error capturing PayPal order:', error)
-              const errorMessage = error instanceof Error ? error : new Error('Payment capture failed')
-              if (onError) {
-                onError(errorMessage)
-              }
-            }
+            const response = await fetch('/api/paypal/capture-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ orderID: data.orderID }),
+            })
+            const details = await response.json()
+            onSuccess(details)
           },
-          onError: (err) => {
-            console.error('PayPal Checkout Error:', err)
-            if (onError) {
-              onError(err instanceof Error ? err : new Error('PayPal checkout error'))
-            }
-          },
-          onCancel: () => {
-            console.log('Payment cancelled by user')
-            if (onCancel) {
-              onCancel()
-            }
-          },
-        })
+          onError: (err) => onError && onError(err),
+          onCancel: () => onCancel && onCancel(),
+        }).render(paypalRef.current)
 
-        await buttons.render(paypalRef.current)
-        paypalButtonInstance.current = buttons
-        console.log('PayPal button initialized successfully')
         setIsLoading(false)
       } catch (err) {
-        console.error('Failed to initialize PayPal button:', err)
-        setError('Failed to initialize payment')
+        console.error('PayPal initialization error:', err)
+        setError('Failed to load PayPal')
         setIsLoading(false)
       }
     }
 
-    initializeOnce()
-  }, [paypalLoaded]) // 只依赖paypalLoaded
+    initializePayPal()
+  }, [paypalLoaded, amount, currency])
 
-  // 单独的effect来更新amount，不重新初始化按钮
-  useEffect(() => {
-    currentAmountRef.current = amount
-    console.log('Amount updated to:', amount)
-  }, [amount])
-
-  // Show error if PayPal failed to load
   if (paypalError) {
     return (
-      <div className="p-4 border border-red-200 rounded-lg bg-red-50">
+      <div className="p-4 bg-red-50 border border-red-200 rounded">
         <p className="text-red-600 text-sm">Payment system error: {paypalError}</p>
       </div>
     )
   }
 
-  // Show error if button failed to initialize
   if (error) {
     return (
-      <div className="p-4 border border-red-200 rounded-lg bg-red-50">
+      <div className="p-4 bg-red-50 border border-red-200 rounded">
         <p className="text-red-600 text-sm">{error}</p>
         <button
-          onClick={() => {
-            setError(null)
-            setIsLoading(true)
-            // Force re-initialization
-            window.location.reload()
-          }}
-          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+          onClick={() => window.location.reload()}
+          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Reload Page
         </button>
@@ -185,10 +105,9 @@ export default function PayPalButton({
     )
   }
 
-  // Show loading state
   if (isLoading) {
     return (
-      <div className="w-full h-14 bg-gray-100 rounded-lg animate-pulse flex items-center justify-center">
+      <div className="w-full h-14 bg-gray-100 rounded animate-pulse flex items-center justify-center">
         <span className="text-gray-500 text-sm">Loading PayPal...</span>
       </div>
     )
