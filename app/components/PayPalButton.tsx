@@ -149,7 +149,7 @@ export default function PayPalButton({
     return () => {
       isMounted = false
     }
-  }, [paypalLoaded, amount, currency, onSuccess, onError, onCancel, style])
+  }, [paypalLoaded, amount, currency])
 
   // Show error if PayPal failed to load
   if (paypalError) {
