@@ -123,7 +123,7 @@ export default function PayPalButton({
       setError('Failed to initialize payment')
       setIsLoading(false)
     }
-  }, [paypalLoaded, amount, currency, onSuccess, onError, onCancel, style])
+  }, [paypalLoaded, amount, currency])
 
   // Show error if PayPal failed to load
   if (paypalError) {

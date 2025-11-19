@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useCart } from '@/context/CartContext'
 import PayPalProvider from '../components/PayPalProvider'
 import PayPalButton from '../components/PayPalButton'
@@ -30,7 +30,7 @@ export default function CheckoutPage() {
     )
   }
 
-  const handlePaymentSuccess = async (details: PayPalCaptureResponse) => {
+  const handlePaymentSuccess = useCallback(async (details: PayPalCaptureResponse) => {
     setPaymentStatus('success')
 
     try {
@@ -86,18 +86,18 @@ export default function CheckoutPage() {
       console.error('Error handling payment success:', error)
       alert('Payment successful but there was an issue processing your order.')
     }
-  }
+  }, [customerName, customerEmail, customerPhone, customerAddress, totalPrice, shippingFee, cart, removeFromCart])
 
-  const handlePaymentError = (error: Error) => {
+  const handlePaymentError = useCallback((error: Error) => {
     setPaymentStatus('error')
     console.error('Payment error:', error)
     alert('Payment failed: ' + error.message)
-  }
+  }, [])
 
-  const handlePaymentCancel = () => {
+  const handlePaymentCancel = useCallback(() => {
     setPaymentStatus('idle')
     alert('Payment cancelled')
-  }
+  }, [])
 
   return (
     <PayPalProvider>
@@ -268,10 +268,13 @@ export default function CheckoutPage() {
               {/* PayPal Payment Button */}
               {paymentMethod === 'paypal' && (
                 <div className="mt-6 relative">
-                  {/* PayPal Button - Always rendered */}
-                  <div className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}>
+                  {/* PayPal Button - Memoized to prevent unnecessary re-renders */}
+                  <div
+                    className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}
+                    key="paypal-container-stable"
+                  >
                     <PayPalButton
-                      key={`paypal-button`}
+                      key={`paypal-${Math.floor((totalPrice + shippingFee) * 100)}`}
                       amount={(totalPrice + shippingFee).toFixed(2)}
                       currency="USD"
                       onSuccess={handlePaymentSuccess}
@@ -289,7 +292,7 @@ export default function CheckoutPage() {
 
                   {/* Overlay message when form is incomplete */}
                   {!isFormValid() && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-white/95 dark:bg-slate-800/95 rounded-lg p-4">
+                    <div className="absolute inset-0 flex items-center justify-center bg-white/95 dark:bg-slate-800/95 rounded-lg p-4 z-10">
                       <div className="text-center">
                         <p className="text-gray-800 dark:text-white font-medium mb-2">
                           Please complete all required fields
