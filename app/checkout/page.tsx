@@ -288,7 +288,7 @@ export default function CheckoutPage() {
                     key="paypal-container-stable"
                   >
                     <PayPalButton
-                      key={paypalButtonKey}
+                      key="paypal-stable"
                       amount={stableAmount.toFixed(2)}
                       currency="USD"
                       onSuccess={handlePaymentSuccess}
