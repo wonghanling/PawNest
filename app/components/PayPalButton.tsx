@@ -27,7 +27,27 @@ export default function PayPalButton({
 
   // 只在PayPal加载后初始化一次，之后只更新金额
   useEffect(() => {
-    if (!paypalLoaded || !paypalRef.current || !window.paypal) {
+    console.log('PayPal useEffect triggered:', {
+      paypalLoaded,
+      hasRef: !!paypalRef.current,
+      hasWindow: !!window.paypal
+    })
+
+    if (!paypalLoaded) {
+      console.log('PayPal not loaded yet, setting loading false')
+      setIsLoading(false)
+      return
+    }
+
+    if (!window.paypal) {
+      console.log('PayPal window object not available, setting loading false')
+      setIsLoading(false)
+      return
+    }
+
+    if (!paypalRef.current) {
+      console.log('PayPal ref not ready, setting loading false')
+      setIsLoading(false)
       return
     }
 
