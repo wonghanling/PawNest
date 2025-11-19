@@ -30,105 +30,135 @@ export default function PayPalButton({
 
     console.log('PayPal Button initializing with amount:', amount)
 
-    if (!paypalLoaded || !paypalRef.current || !window.paypal) {
-      console.log('PayPal not ready:', { paypalLoaded, hasRef: !!paypalRef.current, hasWindow: !!window.paypal })
+    if (!paypalLoaded) {
+      console.log('PayPal not loaded yet')
       setIsLoading(false)
       return
     }
 
-    // Clear any existing PayPal buttons
-    if (paypalRef.current) {
-      paypalRef.current.innerHTML = ''
+    if (!window.paypal) {
+      console.log('PayPal window object not available')
+      setIsLoading(false)
+      return
     }
 
-    try {
-      window.paypal.Buttons({
-        style,
-        createOrder: async () => {
-          try {
-            // Reset error state on new attempt
-            setError(null)
+    if (!paypalRef.current) {
+      console.log('PayPal ref not ready, retrying...')
+      // Retry after a short delay if ref is not ready
+      const retryTimer = setTimeout(() => {
+        if (paypalRef.current) {
+          console.log('PayPal ref is now ready, initializing...')
+          setError(null)
+          setIsLoading(true)
+          initializePayPalButton()
+        } else {
+          console.log('PayPal ref still not ready after retry')
+          setIsLoading(false)
+        }
+      }, 100)
 
-            // Call our API to create the order
-            const response = await fetch('/api/paypal/create-order', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                amount,
-                currency,
-              }),
-            })
+      return () => clearTimeout(retryTimer)
+    }
 
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`)
+    initializePayPalButton()
+
+    function initializePayPalButton() {
+      if (!paypalRef.current || !window.paypal) return
+
+      console.log('Initializing PayPal button with ref:', !!paypalRef.current)
+
+      // Clear any existing PayPal buttons
+      paypalRef.current.innerHTML = ''
+
+      try {
+        window.paypal.Buttons({
+          style,
+          createOrder: async () => {
+            try {
+              // Reset error state on new attempt
+              setError(null)
+
+              // Call our API to create the order
+              const response = await fetch('/api/paypal/create-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  amount,
+                  currency,
+                }),
+              })
+
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+              }
+
+              const order = await response.json()
+              console.log('PayPal order created:', order.id)
+              return order.id
+            } catch (error) {
+              console.error('Error creating PayPal order:', error)
+              setError('Failed to create payment order')
+              throw error
             }
+          },
+          onApprove: async (data) => {
+            try {
+              // Call our API to capture the order
+              const response = await fetch('/api/paypal/capture-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  orderID: data.orderID,
+                }),
+              })
 
-            const order = await response.json()
-            console.log('PayPal order created:', order.id)
-            return order.id
-          } catch (error) {
-            console.error('Error creating PayPal order:', error)
-            setError('Failed to create payment order')
-            throw error
-          }
-        },
-        onApprove: async (data) => {
-          try {
-            // Call our API to capture the order
-            const response = await fetch('/api/paypal/capture-order', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                orderID: data.orderID,
-              }),
-            })
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+              }
 
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`)
+              const details = await response.json()
+              onSuccess(details)
+            } catch (error) {
+              console.error('Error capturing PayPal order:', error)
+              const errorMessage = error instanceof Error ? error : new Error('Payment capture failed')
+              if (onError) {
+                onError(errorMessage)
+              }
+              // Don't setError here to allow retry
             }
-
-            const details = await response.json()
-            onSuccess(details)
-          } catch (error) {
-            console.error('Error capturing PayPal order:', error)
-            const errorMessage = error instanceof Error ? error : new Error('Payment capture failed')
+          },
+          onError: (err) => {
+            console.error('PayPal Checkout Error:', err)
             if (onError) {
-              onError(errorMessage)
+              onError(err instanceof Error ? err : new Error('PayPal checkout error'))
             }
             // Don't setError here to allow retry
-          }
-        },
-        onError: (err) => {
-          console.error('PayPal Checkout Error:', err)
-          if (onError) {
-            onError(err instanceof Error ? err : new Error('PayPal checkout error'))
-          }
-          // Don't setError here to allow retry
-        },
-        onCancel: () => {
-          console.log('Payment cancelled by user')
-          if (onCancel) {
-            onCancel()
-          }
-          // Don't setError here - cancellation is not an error
-        },
-      }).render(paypalRef.current).then(() => {
-        console.log('PayPal button rendered successfully')
-        setIsLoading(false)
-      }).catch((err) => {
-        console.error('Failed to render PayPal button:', err)
-        setError('Failed to load payment button')
-        setIsLoading(false)
-      })
+          },
+          onCancel: () => {
+            console.log('Payment cancelled by user')
+            if (onCancel) {
+              onCancel()
+            }
+            // Don't setError here - cancellation is not an error
+          },
+        }).render(paypalRef.current).then(() => {
+          console.log('PayPal button rendered successfully')
+          setIsLoading(false)
+        }).catch((err) => {
+          console.error('Failed to render PayPal button:', err)
+          setError('Failed to load payment button')
+          setIsLoading(false)
+        })
 
-    } catch (err) {
-      console.error('Error setting up PayPal button:', err)
-      setError('Failed to initialize payment')
-      setIsLoading(false)
+      } catch (err) {
+        console.error('Error setting up PayPal button:', err)
+        setError('Failed to initialize payment')
+        setIsLoading(false)
+      }
     }
   }, [paypalLoaded, amount, currency])
 
