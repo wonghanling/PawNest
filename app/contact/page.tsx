@@ -74,7 +74,7 @@ export default function ContactPage() {
   return (
     <main className="flex-grow">
       {/* Hero Banner */}
-      <section className="relative bg-cover bg-center py-32 bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+      <section className="relative bg-cover bg-center py-32 flex items-center justify-center" style={{ backgroundImage: 'url(/optimized/01.jpg)' }}>
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">Customer Support</h1>
@@ -211,7 +211,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="w-full h-48 bg-slate-200 dark:bg-slate-700 rounded-lg overflow-hidden flex items-center justify-center">
-                    <p className="text-slate-500 dark:text-slate-400">🗺️ Map Placeholder</p>
+                    <img src="/details/2065.webp" alt="Location Map" className="w-full h-full object-cover" />
                   </div>
                 </div>
 
