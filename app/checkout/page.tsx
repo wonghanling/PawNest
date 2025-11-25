@@ -115,12 +115,12 @@ export default function CheckoutPage() {
               ) : (
                 <div className="space-y-4">
                   {cart.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between border-b border-gray-200 dark:border-slate-600 pb-4">
-                      <div className="flex-1">
+                    <div key={item.id} className="flex items-center justify-between border-b border-gray-200 dark:border-slate-600 pb-4 flex-wrap gap-2">
+                      <div className="flex-1 min-w-0">
                         <h3 className="font-medium text-gray-800 dark:text-white">{item.name}</h3>
                         <p className="text-sm text-gray-600 dark:text-slate-400">${item.price}</p>
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-shrink-0">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
                           className="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 flex items-center justify-center"
@@ -141,7 +141,7 @@ export default function CheckoutPage() {
                           ×
                         </button>
                       </div>
-                      <div className="ml-4 font-semibold text-gray-800 dark:text-white">
+                      <div className="w-full sm:w-auto sm:ml-4 font-semibold text-gray-800 dark:text-white text-right">
                         ${(item.price * item.quantity).toFixed(2)}
                       </div>
                     </div>

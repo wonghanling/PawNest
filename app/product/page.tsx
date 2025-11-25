@@ -5305,6 +5305,20 @@ function ProductContent() {
             <button
               onClick={handleAddToCart}
               className="block w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors text-center"
+              style={{
+                display: '-webkit-box',
+                display: '-webkit-flex',
+                display: 'flex',
+                width: '100%',
+                backgroundColor: '#2563eb !important',
+                color: '#ffffff !important',
+                border: 'none !important',
+                outline: 'none !important',
+                visibility: 'visible !important',
+                opacity: '1 !important',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
             >
               Add to Cart
             </button>

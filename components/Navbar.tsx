@@ -98,6 +98,18 @@ export default function Navbar() {
               <Link
                 href="/login"
                 className="flex items-center gap-2 px-4 md:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm whitespace-nowrap"
+                style={{
+                  display: '-webkit-box',
+                  display: '-webkit-flex',
+                  display: 'flex',
+                  backgroundColor: '#2563eb !important',
+                  color: '#ffffff !important',
+                  textDecoration: 'none !important',
+                  border: 'none !important',
+                  outline: 'none !important',
+                  visibility: 'visible !important',
+                  opacity: '1 !important'
+                }}
               >
                 <svg fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
                   <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
@@ -174,6 +186,18 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   className="flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm mt-2"
+                  style={{
+                    display: '-webkit-box',
+                    display: '-webkit-flex',
+                    display: 'flex',
+                    backgroundColor: '#2563eb !important',
+                    color: '#ffffff !important',
+                    textDecoration: 'none !important',
+                    border: 'none !important',
+                    outline: 'none !important',
+                    visibility: 'visible !important',
+                    opacity: '1 !important'
+                  }}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <svg fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
