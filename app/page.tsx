@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Script from 'next/script'
 
 export default function Home() {
   return (
@@ -471,6 +472,12 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* 聊天组件 */}
+      <Script
+        src="/chat-widget.js"
+        strategy="lazyOnload"
+      />
     </div>
   )
 }
