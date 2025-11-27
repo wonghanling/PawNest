@@ -476,7 +476,7 @@ export default function Home() {
       {/* 聊天组件 */}
       <Script
         src="/chat-widget.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
       />
     </div>
   )

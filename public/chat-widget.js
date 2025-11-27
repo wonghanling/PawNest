@@ -21,7 +21,12 @@
         pheight:520,
         pwidth:500,
         leaveamessage:true,
-        check_messages:false
+        check_messages:false,
+        position:'bottom_right',
+        widget_width:300,
+        widget_height:300,
+        position_from_edge:10,
+        theme:0
     };
 
     var po = document.createElement('script');
