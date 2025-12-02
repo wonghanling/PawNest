@@ -27,6 +27,20 @@ export default function StripeCheckoutButton({
     setIsLoading(true)
 
     try {
+      // 准备订单数据（和PayPal格式完全一致）
+      const orderData = {
+        customerName: customerName || 'Guest Customer',
+        customerEmail: customerEmail || 'guest@example.com',
+        customerPhone: customerPhone || '',
+        customerAddress: customerAddress || 'Address not provided',
+        totalAmount: amount,
+        shippingFee: 20, // 固定运费
+        items: items, // 包含完整的商品信息：规格、尺寸、数量、位置
+      }
+
+      // 保存到localStorage，支付成功后使用
+      localStorage.setItem('stripe_pending_order', JSON.stringify(orderData))
+
       // Create checkout session with order metadata
       const response = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',

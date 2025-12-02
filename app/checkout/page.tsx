@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useCart } from '@/context/CartContext'
 import { PaypalCheckoutButton } from '../components/PaypalCheckoutButton'
 import StripeCheckoutButton from '../components/StripeCheckoutButton'
@@ -17,6 +17,81 @@ export default function CheckoutPage() {
   const [customerEmail, setCustomerEmail] = useState('')
   const [customerPhone, setCustomerPhone] = useState('')
   const [customerAddress, setCustomerAddress] = useState('')
+
+  // 检查Stripe支付成功返回
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const isSuccess = urlParams.get('success')
+    const sessionId = urlParams.get('session_id')
+
+    if (isSuccess === 'true' && sessionId) {
+      // 从localStorage读取保存的订单数据
+      const savedOrderData = localStorage.getItem('stripe_pending_order')
+
+      if (savedOrderData) {
+        const orderData = JSON.parse(savedOrderData)
+
+        // 保存订单到Supabase
+        handleStripeSuccess(sessionId, orderData)
+
+        // 清除localStorage
+        localStorage.removeItem('stripe_pending_order')
+      }
+    } else if (urlParams.get('canceled') === 'true') {
+      alert('Payment was canceled.')
+      // 清理URL参数
+      window.history.replaceState({}, '', '/checkout')
+    }
+  }, [])
+
+  // 处理Stripe支付成功
+  const handleStripeSuccess = async (sessionId: string, orderData: any) => {
+    setPaymentStatus('processing')
+
+    try {
+      const finalOrderData = {
+        ...orderData,
+        stripeSessionId: sessionId,
+        paymentMethod: 'stripe',
+        paymentStatus: 'completed',
+      }
+
+      console.log('Saving Stripe order:', finalOrderData)
+
+      // 保存订单到 Supabase
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(finalOrderData)
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        console.log('Stripe order saved successfully:', result)
+
+        setPaymentStatus('success')
+
+        // 显示成功消息
+        alert(`Payment successful! 🎉\nOrder Number: ${result.order.order_number}\nPayment Method: Stripe`)
+
+        // 清空购物车
+        orderData.items.forEach((item: any) => removeFromCart(item.id))
+
+        // 清理URL参数
+        window.history.replaceState({}, '', '/checkout')
+      } else {
+        console.error('Failed to save Stripe order')
+        setPaymentStatus('error')
+        alert('Payment successful but failed to save order. Please contact support.')
+      }
+    } catch (error) {
+      console.error('Error handling Stripe payment success:', error)
+      setPaymentStatus('error')
+      alert('Payment successful but there was an issue processing your order.')
+    }
+  }
 
   // 检查表单是否填写完整
   const isFormValid = () => {

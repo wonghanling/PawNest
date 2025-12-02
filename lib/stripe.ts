@@ -39,7 +39,7 @@ export async function createStripeCheckoutSession(
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.pawnesting.com'}/checkout?success=true`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.pawnesting.com'}/checkout?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.pawnesting.com'}/checkout?canceled=true`,
       customer_email: customerEmail,
       metadata: metadata,
