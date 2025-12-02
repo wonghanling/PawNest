@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useCart } from '@/context/CartContext'
 import { PaypalCheckoutButton } from '../components/PaypalCheckoutButton'
+import StripeCheckoutButton from '../components/StripeCheckoutButton'
 
 export default function CheckoutPage() {
   const { cart, getTotalPrice, updateQuantity, removeFromCart } = useCart()
@@ -28,11 +29,11 @@ export default function CheckoutPage() {
     )
   }
 
-  const handlePaymentSuccess = useCallback(async (details: any) => {
+  const handlePaymentSuccess = useCallback(async (details: any, method: 'paypal' | 'stripe' = 'paypal') => {
     setPaymentStatus('success')
 
     try {
-      // 准备订单数据
+      // 准备订单数据 - 支持PayPal和Stripe
       const orderData = {
         customerName: customerName || 'Guest Customer',
         customerEmail: customerEmail || 'guest@example.com',
@@ -40,9 +41,13 @@ export default function CheckoutPage() {
         customerAddress: customerAddress || 'Address not provided',
         totalAmount: (totalPrice + shippingFee),
         shippingFee: shippingFee,
-        paymentMethod: 'paypal',
+        paymentMethod: method,
         paymentStatus: 'completed',
-        paypalTransactionId: details.id,
+        // 根据支付方式保存不同的交易ID字段
+        ...(method === 'paypal'
+          ? { paypalTransactionId: details.id }
+          : { stripeTransactionId: details.id }
+        ),
         items: cart.map((item) => ({
           itemPosition: item.pageNumber && item.itemPosition
             ? `第${item.pageNumber}页第${item.itemPosition}个`
@@ -247,7 +252,7 @@ export default function CheckoutPage() {
                     checked={paymentMethod === 'stripe'}
                     onChange={() => setPaymentMethod('stripe')}
                   />
-                  <span className="text-gray-700 dark:text-slate-300 font-medium">Credit/Debit Card (Coming Soon)</span>
+                  <span className="text-gray-700 dark:text-slate-300 font-medium">Credit/Debit Card</span>
                 </label>
               </div>
 
@@ -287,10 +292,47 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* Stripe Payment (Coming Soon) */}
+              {/* Stripe Payment */}
               {paymentMethod === 'stripe' && (
-                <div className="mt-6 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg text-center">
-                  <p className="text-gray-600 dark:text-slate-400">Credit card payment coming soon!</p>
+                <div className="mt-6 relative">
+                  <div className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}>
+                    <StripeCheckoutButton
+                      amount={totalPrice + shippingFee}
+                      customerEmail={customerEmail}
+                      customerName={customerName}
+                      customerPhone={customerPhone}
+                      customerAddress={customerAddress}
+                      items={cart.map((item) => ({
+                        itemPosition: item.pageNumber && item.itemPosition
+                          ? `第${item.pageNumber}页第${item.itemPosition}个`
+                          : '位置未知',
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                        variant: item.variant
+                      }))}
+                      disabled={!isFormValid()}
+                    />
+                  </div>
+
+                  {/* Overlay message when form is incomplete */}
+                  {!isFormValid() && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white/95 dark:bg-slate-800/95 rounded-lg p-4 z-10">
+                      <div className="text-center">
+                        <p className="text-gray-800 dark:text-white font-medium mb-2">
+                          Please complete all required fields
+                        </p>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                          {!customerName.trim() && <div>• Full Name</div>}
+                          {!customerEmail.trim() && <div>• Email</div>}
+                          {!customerPhone.trim() && <div>• Phone Number</div>}
+                          {!customerAddress.trim() && <div>• Address</div>}
+                          {cart.length === 0 && <div>• Cart is empty</div>}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
