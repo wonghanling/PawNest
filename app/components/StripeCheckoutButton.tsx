@@ -1,10 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-
-// Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 interface StripeCheckoutButtonProps {
   amount: number
@@ -31,13 +27,6 @@ export default function StripeCheckoutButton({
     setIsLoading(true)
 
     try {
-      // Get Stripe instance
-      const stripe = await stripePromise
-
-      if (!stripe) {
-        throw new Error('Stripe failed to load')
-      }
-
       // Create checkout session with order metadata
       const response = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
@@ -63,17 +52,14 @@ export default function StripeCheckoutButton({
       }
 
       // Redirect to Stripe Checkout
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      })
-
-      if (result.error) {
-        throw new Error(result.error.message)
+      if (session.url) {
+        window.location.href = session.url
+      } else {
+        throw new Error('No checkout URL returned')
       }
     } catch (error) {
       console.error('Stripe checkout error:', error)
       alert(error instanceof Error ? error.message : 'Payment failed. Please try again.')
-    } finally {
       setIsLoading(false)
     }
   }
