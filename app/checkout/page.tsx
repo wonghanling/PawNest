@@ -8,7 +8,7 @@ import StripeCheckoutButton from '../components/StripeCheckoutButton'
 export default function CheckoutPage() {
   const { cart, getTotalPrice, updateQuantity, removeFromCart } = useCart()
   const totalPrice = getTotalPrice()
-  const shippingFee = 20
+  const shippingFee = 4
   const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'stripe'>('paypal')
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle')
 

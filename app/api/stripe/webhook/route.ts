@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         customer_phone: metadata.customerPhone,
         customer_address: metadata.customerAddress,
         total_amount: session.amount_total / 100, // Convert from cents
-        shipping_fee: 20, // Default shipping fee
+        shipping_fee: 4, // Default shipping fee
         payment_method: 'stripe',
         payment_status: 'completed',
         stripe_transaction_id: session.payment_intent,

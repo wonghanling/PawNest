@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         customer_phone: customerPhone,
         customer_address: customerAddress,
         total_amount: totalAmount,
-        shipping_fee: shippingFee || 20.00,
+        shipping_fee: shippingFee || 4.00,
         payment_method: paymentMethod,
         payment_status: paymentStatus,
         paypal_transaction_id: paypalTransactionId,

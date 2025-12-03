@@ -34,7 +34,7 @@ export default function StripeCheckoutButton({
         customerPhone: customerPhone || '',
         customerAddress: customerAddress || 'Address not provided',
         totalAmount: amount,
-        shippingFee: 20, // 固定运费
+        shippingFee: 4, // 固定运费
         items: items, // 包含完整的商品信息：规格、尺寸、数量、位置
       }
 
