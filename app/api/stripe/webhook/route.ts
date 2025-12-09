@@ -3,6 +3,13 @@ import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
+  // Stripe支付暂时关闭 - webhook也暂时禁用
+  return NextResponse.json(
+    { error: 'Stripe webhook is temporarily disabled' },
+    { status: 503 }
+  )
+
+  /* 暂时注释掉 - 等待Stripe身份验证完成后重新启用
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 
@@ -75,4 +82,5 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     )
   }
+  */
 }

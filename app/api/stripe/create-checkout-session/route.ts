@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createStripeCheckoutSession } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
+  // Stripe支付暂时关闭 - 等待身份验证完成
+  return NextResponse.json(
+    { error: 'Stripe payment is temporarily disabled. Please use PayPal.' },
+    { status: 503 }
+  )
+
+  /* 暂时注释掉 - 等待Stripe身份验证完成后重新启用
   try {
     const body = await request.json()
     const { amount, customerEmail, metadata } = body
@@ -45,4 +52,5 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
+  */
 }

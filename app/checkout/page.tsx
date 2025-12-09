@@ -319,7 +319,8 @@ export default function CheckoutPage() {
                   />
                   <span className="text-gray-700 dark:text-slate-300 font-medium">PayPal</span>
                 </label>
-                <label className="flex items-center p-4 border-2 border-gray-300 dark:border-slate-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-500 transition">
+                {/* Stripe支付暂时关闭 - 等待身份验证完成后重新启用 */}
+                {/* <label className="flex items-center p-4 border-2 border-gray-300 dark:border-slate-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-500 transition">
                   <input
                     type="radio"
                     name="payment"
@@ -328,7 +329,7 @@ export default function CheckoutPage() {
                     onChange={() => setPaymentMethod('stripe')}
                   />
                   <span className="text-gray-700 dark:text-slate-300 font-medium">Credit/Debit Card</span>
-                </label>
+                </label> */}
               </div>
 
               {/* PayPal Payment Button */}
@@ -367,8 +368,8 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* Stripe Payment */}
-              {paymentMethod === 'stripe' && (
+              {/* Stripe Payment - 暂时关闭 */}
+              {/* {paymentMethod === 'stripe' && (
                 <div className="mt-6 relative">
                   <div className={!isFormValid() ? 'pointer-events-none opacity-50' : ''}>
                     <StripeCheckoutButton
@@ -392,7 +393,7 @@ export default function CheckoutPage() {
                   </div>
 
                   {/* Overlay message when form is incomplete */}
-                  {!isFormValid() && (
+                  {/* {!isFormValid() && (
                     <div className="absolute inset-0 flex items-center justify-center bg-white/95 dark:bg-slate-800/95 rounded-lg p-4 z-10">
                       <div className="text-center">
                         <p className="text-gray-800 dark:text-white font-medium mb-2">
@@ -409,7 +410,7 @@ export default function CheckoutPage() {
                     </div>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
 
             {/* 订单汇总 */}
