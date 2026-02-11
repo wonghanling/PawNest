@@ -211,7 +211,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="w-full h-48 bg-slate-200 dark:bg-slate-700 rounded-lg overflow-hidden flex items-center justify-center">
-                    <img src="/details/2065.webp" alt="Location Map" className="w-full h-full object-cover" />
+                    <img src="/optimized/2065.webp" alt="Location Map" className="w-full h-full object-cover" />
                   </div>
                 </div>
 
